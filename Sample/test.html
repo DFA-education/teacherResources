@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   </head>
   <body>
+    
     <!-- creates textboxes and buttons -->
     Route: <input type='text' id='routeInput' value = '44'>
     <!-- call on getRoute function when this button is pressed -->
@@ -22,6 +23,9 @@
         // creates json object to send to server
         var routeData = {
             type: "routeStreetRequest",
+            
+            // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
+            
             routeNumber: $(routeInput).val()
           };
         // talks to server

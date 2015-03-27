@@ -15,6 +15,9 @@ function findRouteNumber(routeNumber, response){
 	console.log(routeNumber);
 	// selects the relevant variable "on_street" from the table in the database, called "Bus", 
 	// where the route is equal to the routeNumber
+
+	//!!!!!!! THIS: 'select on_street from Bus where routes = 44" IS A SQL QUERY
+	
 	db.all('select on_street from Bus where routes = "'+routeNumber+'"', function(err, streets){
 		// send the first street name back to the browser
 		response.send(streets[0]);
@@ -25,6 +28,8 @@ function findRouteNumber(routeNumber, response){
 // handle requests from client
 app.get('/',function(request,response){
 	response.header('Access-Control-Allow-Origin', "*");
+	
+	// !!!!! HERE IS THE NODE/EXPRESS MAGIC
 	
 	if (request.query.type == "routeStreetRequest"){
 		var output = findRouteNumber(request.query.routeNumber, response);
