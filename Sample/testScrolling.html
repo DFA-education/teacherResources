@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.1.1/Sortable.min.js"></script>
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
 
     <script>
@@ -48,7 +48,7 @@
 
 
       function makeDraggable2(listName, groupName){
-        
+
         var el = document.getElementById(listName);
         var sort = Sortable.create(el, {
           group: groupName,
@@ -71,7 +71,7 @@
         Sortable.create(listName, {
           group: groupName,
           handle: '.glyphicon-move',
-          animation: 150, 
+          animation: 150,
           store: {
             get: function(sortable){
               var order = localStorage.getItem(sortable.options.group);
@@ -165,15 +165,16 @@
 
 
 
-    <script> 
+    <script>
       makeDraggableHandle(listWithHandle, "handleList");
       makeDraggableHandle(listWithHandle2, "handleList");
-      
+
 
 
     </script>
 
-     <!-- <script>makeDraggable("items2"); </script> -->   
+    <script>makeDraggable("items2"); </script>
+     <!-- <script>makeDraggable("items2"); </script> -->
 
     </body>
 </html>
