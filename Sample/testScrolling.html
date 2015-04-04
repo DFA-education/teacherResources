@@ -9,7 +9,10 @@
     <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.1.1/Sortable.min.js"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+
     <script>
+      var modifiedList;
       function getRoute(){
         // creates json object to send to server
         var routeData = {
@@ -34,10 +37,56 @@
           routeInput.value = "";
       }
 
+      function viewModifiedList(){
+          console.log(modifiedList);
+        };
+
       function makeDraggable(listName){
         var el = document.getElementById(listName);
         var sortable = Sortable.create(el);
       }
+
+
+      function makeDraggable2(listName, groupName){
+
+        var el = document.getElementById(listName);
+        var sort = Sortable.create(el, {
+          group: groupName,
+          animation: 150,
+          store: {
+            get: function(sortable){
+              var order = localStorage.getItem(sortable.options.group);
+              return order ? order.split('|') : [];
+            },
+            set: function(sortable){
+              var order = sortable.toArray();
+              localStorage.setItem(sortable.options.group, order.join('|'));
+              modifiedList = localStorage.getItem(sortable.options.group);
+            }
+          },
+        });
+      }
+
+      function makeDraggableHandle(listName,groupName){
+        Sortable.create(listName, {
+          group: groupName,
+          handle: '.glyphicon-move',
+          animation: 150,
+          store: {
+            get: function(sortable){
+              var order = localStorage.getItem(sortable.options.group);
+              return order ? order.split('|') : [];
+            },
+            set: function(sortable){
+              var order = sortable.toArray();
+              localStorage.setItem(sortable.options.group, order.join('|'));
+              modifiedList = localStorage.getItem(sortable.options.group);
+              console.log(modifiedList);
+            }
+          },
+        })
+      }
+
 
       // var el = document.getElementById('items');
       // var sortable = Sortable.create(el);
@@ -60,20 +109,75 @@
       and street that is on that route will appear in the text box labelled 'onStreet'</p>
 
     <ul id='items'>
-      <li> item 1 </li>
-      <li> item 2 </li>
-      <li> item 3 </li>
+      <li data-id = '1'> item 1 </li>
+      <li data-id = '2'> item 2 </li>
+      <li data-id = '3'> item 3 </li>
     </ul>
 
-    <script>makeDraggable("items"); </script>
+    <script>makeDraggable2("items", "group1"); </script>
 
     <ul id='items2'>
-      <li> item 4 </li>
-      <li> item 5 </li>
-      <li> item 6 </li>
+      <li data-id = '4'> item 4 </li>
+      <li data-id = '5'> item 5 </li>
+      <li data-id = '6'> item 6 </li>
     </ul>
+    <script>makeDraggable2("items2", "group1"); </script>
 
+    <button id = 'viewModifiedList' onclick = "viewModifiedList()"> View Modified List </button>
+
+
+    <div id = "listContainer">
+      <div class = "row">
+        <div class = 'col-xs-4'>
+          <div id="listWithHandle" class="list-group">
+            <div class="list-group-item" data-id = "1">
+              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+              Thing1
+            </div>
+            <div class="list-group-item">
+              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+              Thing2
+            </div>
+            <div class="list-group-item">
+              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+              Thing3
+            </div>
+          </div>
+        </div>
+        <div class = 'col-xs-4'>
+          <div id="listWithHandle2" class="list-group">
+            <div class="list-group-item">
+              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+              Thing4
+            </div>
+            <div class="list-group-item">
+              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+              Thing5
+            </div>
+            <div class="list-group-item">
+              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+              Thing6
+            </div>
+          </div>
+        </div>
+      <div>
+    </div>
+
+
+
+    <script>
+      makeDraggableHandle(listWithHandle, "handleList");
+      makeDraggableHandle(listWithHandle2, "handleList");
+
+
+
+    </script>
+
+<<<<<<< HEAD
     <script>makeDraggable("items2"); </script>
+=======
+     <!-- <script>makeDraggable("items2"); </script> -->
+>>>>>>> 082f97a8a07c631d54fc74148aef431c36e5d8cc
 
     </body>
 </html>
