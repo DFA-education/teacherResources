@@ -5,11 +5,9 @@ db.serialize(function() {
 
 
 
-  db.run("CREATE TABLE if not exists Users (email Text)");
+  db.run("CREATE TABLE if not exists Bob (email Text)");
   var createUser = db.prepare("INSERT INTO Users Values (?)");
-  // for (var i = 0; i < 10; i++) {
-  //     stmt.run("Ipsum " + i);
-  // }
+
   createUser.run("blahblahblah");
   createUser.finalize();
 

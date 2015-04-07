@@ -68,7 +68,9 @@
       }
 
       function makeDraggableHandle(listName,groupName){
-        Sortable.create(listName, {
+        var el = document.getElementById(listName);
+        console.log(listName);
+        Sortable.create(el, {
           group: groupName,
           handle: '.glyphicon-move',
           animation: 150,
@@ -79,23 +81,39 @@
             },
             set: function(sortable){
               var order = sortable.toArray();
-              localStorage.setItem(sortable.options.group, order.join('|'));
-              modifiedList = localStorage.getItem(sortable.options.group);
-              console.log(modifiedList);
+              localStorage.setItem(listName, order.join('|'));
+              // console.log(modifiedList);
             }
           },
         })
+        console.log(localStorage.getItem(listName));
+        console.log(listName);
       }
 
+        function getTableValue(){
+        // creates json object to send to server
+        var tableRequestData = {
+            type: "getTableValue",
 
-      // var el = document.getElementById('items');
-      // var sortable = Sortable.create(el);
+            // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
 
+            tableType: "BobCurrent"
+          };
+        // talks to server
+        // first argument: port,
+        // second: data to send over,
+        // third: function that specifies what to do with the data that is recieved
+        $.get('http://127.0.0.1:1337/', tableRequestData, function(recieved_data){
+            // prints the data recieved on the console.
+            // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
+            console.log(recieved_data);
+            // puts the relevant data into the on street textbox
+            
+          });
+          // reset textbox value
 
+      }
     </script>
-
-
-
   </head>
   <body>
 
@@ -134,27 +152,27 @@
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing1
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" data-id = "2">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing2
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" data-id = "3">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing3
             </div>
           </div>
         </div>
         <div class = 'col-xs-4'>
-          <div id="listWithHandle2" class="list-group">
-            <div class="list-group-item">
+          <div id="listWithHandle2" class="list-group" >
+            <div class="list-group-item" data-id = "4">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing4
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" data-id = "5">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing5
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" data-id = "6">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing6
             </div>
@@ -166,12 +184,13 @@
 
 
     <script>
-      makeDraggableHandle(listWithHandle, "handleList");
-      makeDraggableHandle(listWithHandle2, "handleList");
+      makeDraggableHandle("listWithHandle", "handleList");
+      makeDraggableHandle("listWithHandle2", "handleList");
 
 
 
     </script>
+    <button id = 'getTableValue' onclick = "getTableValue()"> get database table value</button>
 
     <script>makeDraggable("items2"); </script>
      <!-- <script>makeDraggable("items2"); </script> -->
