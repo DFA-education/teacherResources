@@ -108,10 +108,26 @@
             // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
             console.log(recieved_data);
             // puts the relevant data into the on street textbox
-            
-          });
-          // reset textbox value
+            for (var i = 0; i < recieved_data.length; i ++){
+              var item = recieved_data[i];
+              var list_item_div = document.createElement("div");
+              $(list_item_div).attr('data-id', item.projectID);
+              list_item_div.className = "list-group-item";
 
+
+              var list_item_inner_span = document.createElement("span");
+              $(list_item_inner_span).text(item.currentProject);
+              list_item_inner_span.className = "glyphicon glyphicon-move";
+              $(list_item_inner_span).attr('aria-hidden',true);
+              
+              $(list_item_div).append(list_item_inner_span);
+              $('#listWithHandle').append(list_item_div);
+            }
+          });
+      }
+
+      function saveTableValue(){
+        
       }
     </script>
   </head>
@@ -148,7 +164,7 @@
       <div class = "row">
         <div class = 'col-xs-4'>
           <div id="listWithHandle" class="list-group">
-            <div class="list-group-item" data-id = "1">
+<!--             <div class="list-group-item" data-id = "1">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing1
             </div>
@@ -159,7 +175,7 @@
             <div class="list-group-item" data-id = "3">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Thing3
-            </div>
+            </div> -->
           </div>
         </div>
         <div class = 'col-xs-4'>
@@ -178,7 +194,7 @@
             </div>
           </div>
         </div>
-      <div>
+      </div>
     </div>
 
 
