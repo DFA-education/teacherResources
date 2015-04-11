@@ -76,17 +76,17 @@
           animation: 150,
           store: {
             get: function(sortable){
-              var order = localStorage.getItem(sortable.options.group);
+              var order = sessionStorage.getItem(sortable.options.group);
               return order ? order.split('|') : [];
             },
             set: function(sortable){
               var order = sortable.toArray();
-              localStorage.setItem(listName, order.join('|'));
+              sessionStorage.setItem(listName, order.join('|'));
               // console.log(modifiedList);
             }
           },
         })
-        console.log(localStorage.getItem(listName));
+        console.log(sessionStorage.getItem(listName));
         console.log(listName);
       }
 
@@ -127,7 +127,7 @@
       }
 
       function saveTableValue(){
-        
+
       }
     </script>
   </head>
@@ -180,17 +180,17 @@
         </div>
         <div class = 'col-xs-4'>
           <div id="listWithHandle2" class="list-group" >
-            <div class="list-group-item" data-id = "4">
+            <div class="list-group-item" data-id = "1">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
-              Thing4
+              Thing1
             </div>
-            <div class="list-group-item" data-id = "5">
+            <div class="list-group-item" data-id = "2">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
-              Thing5
+              Thing2
             </div>
-            <div class="list-group-item" data-id = "6">
+            <div class="list-group-item" data-id = "3">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
-              Thing6
+              Thing3
             </div>
           </div>
         </div>
