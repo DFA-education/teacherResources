@@ -1,0 +1,20 @@
+<head>
+    <title>WTE</title>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
+    <script type='text/javascript' src='js/bootstrap.js'></script>
+    <script type='text/javascript' src='js/controllers.js'></script>
+</head>
+
+<div class="collapse navbar-collapse" ng-controller="HeaderController">
+    <ul class="nav navbar-nav">
+    	<a class="navbar-brand" href="#">Brand</a>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li ng-class="{ active: isActive('/')}"><a href="questionpage.html">Home</a></li>
+        <li ng-class="{ active: isActive('/')}"><a href="profpage.html">Profile</a></li>
+        <li ng-class="{ active: isActive('/')}"><a href="customize.html">Workspace</a></li>
+    </ul>
+</div>
+<div ng-view></div>
+
