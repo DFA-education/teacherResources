@@ -12,7 +12,7 @@ app.use(express.static(__dirname));
 function getTableValue(tableType, response){
 	// logs the routeNumber in the console
 	// to see the console, look at your terminal window where you ran nodeFile.js
-	console.log(tableType);
+	console.log('tabletype ',tableType);
 	// selects the relevant variable "on_street" from the table in the database, called "Bus", 
 	// where the route is equal to the routeNumber
 
@@ -21,6 +21,7 @@ function getTableValue(tableType, response){
 	db.all('select * from ' + tableType, function(err, list){
 		// send the first street name back to the browser
 		response.send(list);
+		
 	})
 }
 
