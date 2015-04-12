@@ -1,14 +1,18 @@
 <head>
     <title>WTE</title>
     <link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.min.css'/>
+    <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.css'/>
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
     <script type='text/javascript' src='js/bootstrap.js'></script>
     <script type='text/javascript' src='js/controllers.js'></script>
+    <script type='text/javascript' src='Semantic-UI-master/dist/semantic.js'></script>
+    <script type='text/javascript' src='Semantic-UI-master/dist/semantic.min.js'></script>
 </head>
 
 <div class="collapse navbar-collapse" ng-controller="HeaderController">
     <ul class="nav navbar-nav">
-    	<a class="navbar-brand" href="#">Brand</a>
+    	<a class="navbar-brand" href="#">WTE</a>
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li ng-class="{ active: isActive('/')}"><a href="questionpage.html">Home</a></li>
@@ -17,4 +21,43 @@
     </ul>
 </div>
 <div ng-view></div>
+
+<div class="ui page grid">
+    <div class="four wide column">
+      <div class="ui segment">
+      <div class="ui vertical text menu">
+  <div class="header item">Subject Matter</div>
+  <a class="active item" href="#">
+    <i class="radio icon"></i> Algebra
+  </a>
+  <a class="item" href="profpage.html">
+    <i class="radio icon"></i> Geometry
+  </a>
+  <a class="item" href="#">
+    <i class="radio icon"></i> Statistics
+  </a>
+  <a class="item" href="#">
+    <i class="radio icon"></i> Pre-Calculus
+  </a>
+  <a class="item" href="#">
+    <i class="radio icon"></i> Calculus
+  </a>
+      </div>
+      </div>        
+    </div>
+    <div class="eight wide column">
+      <div class="ui segment">
+      </div>    
+    </div>
+    <div class="four wide column">
+      <div class="ui segment">
+      <h4>My Projects</h4>
+      <h4>Saved Projects</h4>
+      <h4>Saved Questions</h4>
+      </div>   
+    </div>
+</div>
+
+
+
 
