@@ -128,12 +128,22 @@
 
       function saveTableValue(){
         var save_data = {
+          type: 'saved',
           projectID: 100,
           currentProject: "item100"
         }
-        // for (var i = 0; i)
-        // here is a function 
+        $.ajax({
+          type: "POST",
+          url: "http://127.0.0.1:1337/",
+          data: save_data,
+          success: function success(response){
+            console.log(response);
+          }
+          })
+        // for (var i = 0; )
+        
       }
+
     </script>
   </head>
   <body>
@@ -213,6 +223,7 @@
     </script>
     <button id = 'getTableValue' onclick = "getTableValue()"> get database table value</button>
 
+    <button id = 'saveTableValue' onclick = "saveTableValue()"> save value to database</button>
     <script>makeDraggable("items2"); </script>
      <!-- <script>makeDraggable("items2"); </script> -->
 
