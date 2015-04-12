@@ -1,0 +1,115 @@
+<html>
+    <head>
+    <title>WTE</title>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.min.css'/>
+    <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.css'/>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
+    <script type='text/javascript' src='js/bootstrap.js'></script>
+    <script type='text/javascript' src='js/controllers.js'></script>
+    <script type='text/javascript' src='Semantic-UI-master/dist/semantic.js'></script>
+    <script type='text/javascript' src='Semantic-UI-master/dist/semantic.min.js'></script>
+        <style type='text/css'>
+        </style>
+        <script>
+            // show the given page, hide the rest
+            function show(elementID) {
+                // try to find the requested page and alert if it's not found
+                var ele = document.getElementById(elementID);
+                if (!ele) {
+                    alert("no such element");
+                    return;
+                }
+                console.log(ele);
+                // get all pages, loop through them and hide them
+                var pages = document.getElementsByClassName('superman');
+                for(var i = 0; i < pages.length; i++) {
+                    pages[i].style.display = 'none';
+                }
+
+                // then show the requested page
+                ele.style.display = 'block';
+//                var children = $($(ele).find('.page')).css('display','block');
+            }
+            $(document).ready(function() {
+                $(".item").hover(
+                    function(){
+                        //what to do on hover
+                        $($(this).children()).css('display', 'block')
+
+                    },
+                    function(){
+                        $($(this).children()).css('display', 'none')
+
+                    });
+
+            });
+        </script>
+
+
+    </head>
+    <body>
+      <p>
+        <div class="collapse navbar-collapse" ng-controller="HeaderController">
+            <ul class="nav navbar-nav">
+                <a class="navbar-brand" href="#">WTE</a>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-class="{ active: isActive('/')}" ><a onclick="show('Page1');">Home</a></li>
+                <li ng-class="{ active: isActive('/')}"><a onclick="show('Page2');">Profile</a></li>
+                <li ng-class="{ active: isActive('/')}"><a onclick="show('Page3');">Workspace</a></li>
+            </ul>
+        </div>
+        </p>
+
+    <div id="Page1" class="superman" style="">
+       <div class="ui page grid">
+            <div class="four wide column">
+              <div class="ui vertical menu">
+          <div class="header item">Subject Matter</div>
+          <a class="item" href="#" >
+            Algebra
+          </a>
+          <a class="item" href="?subject=Geometry">
+            Geometry
+          </a>
+          <a class="item" href="#">
+            Statistics
+          </a>
+          <div class="item">
+            Pre-Calculus
+            <div class = "menu" style = "display: none;">
+            <a class = "item">Lines</a>
+            <a class = "item">Graphs</a>
+            <a class = "item">Functions</a>
+
+          </div>
+          </div>
+
+          <a class="item" href="#">
+            Calculus
+          </a>
+              </div>        
+            </div>
+            <div class="eight wide column">
+              <div class="ui segment">
+              </div>    
+            </div>
+            <div class="four wide column">
+              <div class="ui segment">
+              <h4>My Projects</h4>
+              <h4>Saved Projects</h4>
+              <h4>Saved Questions</h4>
+              </div>   
+            </div>
+        </div>
+    </div>
+    <div id="Page2" class="superman" style="display:none">
+        Content of page 2
+    </div>
+    <div id="Page3" class="superman" style="display:none">
+        Content of page 3
+    </div>
+
+    </body>
+</html>

@@ -1,14 +1,81 @@
 <head>
     <title>WTE</title>
     <link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.min.css'/>
+    <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.css'/>
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
     <script type='text/javascript' src='js/bootstrap.js'></script>
     <script type='text/javascript' src='js/controllers.js'></script>
+    <script type='text/javascript' src='Semantic-UI-master/dist/semantic.js'></script>
+    <script type='text/javascript' src='Semantic-UI-master/dist/semantic.min.js'></script>
+    <script type='text/javascript' src='leftmenu.js'></script>
+    <script type="text/javascript">
+    function MasterControl($scope) {
+      $scope.subject = "";
+      $scope.path = {
+        "Geometry": {
+          "Measurement": [
+            "Unit Circle",
+            "Radian",
+            "Degree"
+          ],
+          "Geometry": [
+            "Locus",
+            "Hyperbola",
+            "Ellipse",
+            "Parabola"
+          ],
+          "Plane": [
+            "Circle",
+            "Area",
+            "Polygon",
+            "Perimeter",
+            "Construction",
+            "Triangles",
+            "Transformations"
+          ]
+        }
+      }
+
+    $scope.path2 = {}
+    $scope.path3 = {}
+
+    $scope.setSub = function(key){
+      $scope.path2 = $scope.path[key];
+    }
+    $scope.setSub2 = function(key){
+      $scope.path3 = $scope.path2[key];
+    }
+    $scope.init = function() {
+      var params = $scope.getSearchParameters();
+      $scope.setSub(params.subject);
+      $scope.subject = params.subject
+    }
+
+    $scope.getSearchParameters = getSearchParameters;
+    }
+
+    function getSearchParaters() {
+      var prmstr = window.location.search.substr(1);
+      return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr): {};
+    }
+
+    function transformToAssocArra( prmstr ) {
+      var params = {};
+      var prmarr = prmstr.split("&");
+      for (var i = 0; o < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+      }
+      return params;
+    }   
+    </script> 
 </head>
+<body>
 
 <div class="collapse navbar-collapse" ng-controller="HeaderController">
     <ul class="nav navbar-nav">
-    	<a class="navbar-brand" href="#">Brand</a>
+    	<a class="navbar-brand" href="#">WTE</a>
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li ng-class="{ active: isActive('/')}"><a href="questionpage.html">Home</a></li>
@@ -17,4 +84,69 @@
     </ul>
 </div>
 <div ng-view></div>
+
+<div class="ui page grid">
+    <div class="four wide column">
+      <div class="ui segment">
+      <div class="ui vertical text menu">
+  <div class="header item">Subject Matter</div>
+  <a class="active item" href="#" >
+    <i class="radio icon"></i> Algebra
+  </a>
+  <a class="item" href="?subject=Geometry">
+    <i class="radio icon"></i> Geometry
+  </a>
+  <a class="item" href="#">
+    <i class="radio icon"></i> Statistics
+  </a>
+  <a class="item" href="#">
+    <i class="radio icon"></i> Pre-Calculus
+  </a>
+  <a class="item" href="#">
+    <i class="radio icon"></i> Calculus
+  </a>
+      </div>
+      </div>        
+    </div>
+    <div class="eight wide column">
+      <div class="ui segment">
+      </div>    
+    </div>
+    <div class="four wide column">
+      <div class="ui segment">
+      <h4>My Projects</h4>
+      <h4>Saved Projects</h4>
+      <h4>Saved Questions</h4>
+      </div>   
+    </div>
+</div>
+
+            <div class="container" ng-controller= "MasterControl" ng-init="init()">
+                    <div class="row">
+            <div class="col-sm-12">
+                <h2> {{subject}} </h2>
+                </div>
+                </div>
+              <div class="row">
+                <div class="col-xs-4">
+                <div class="btn-group-vertical" role="group">
+                  <button type="button" class="btn btn-default" ng-repeat="(key, val) in path2" ng-click="setSub2(key)">{{key}}</button>
+                </div>
+                </div>
+                <div class="col-xs-4">
+                <div id="ACvsDCQuestionBtn"  class="btn-group-vertical" role="group">
+                  <button id="sincostan" data-toggle="modal" data-target="#ACvsDCQuestionModal" data-local="#ACvsDCQuestion" type="button" class="btn btn-default" ng-repeat="(key, val) in path3" ng-click="setSub3(key)">{{key}}</button>
+                  </div>
+                </div>
+                <div class="col-xs-4">
+                <div class="btn-group-vertical" role="group">
+                  <button type="button" class="btn btn-default" ng-repeat="(key, val) in path4">{{val}}</button>
+                  </div>
+                </div>
+            </div>
+            </div>
+
+</body>
+
+
 
