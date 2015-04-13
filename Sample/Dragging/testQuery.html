@@ -5,10 +5,11 @@
   </head>
   <body>
     <script>
+      userID = 1;
       function getEmail(userID){
         console.log("getEmail");
         // creates json object to send to server
-        var user = {
+        var request = {
             type: "emailRequest",
             user: userID
             // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
@@ -17,10 +18,11 @@
         // first argument: port,
         // second: data to send over,
         // third: function that specifies what to do with the data that is recieved
-        $.get('http://127.0.0.1:1337/', user, function(received_data){
+        $.get('http://127.0.0.1:1337/', request, function(data){
+            console.log(data);
             // prints the data recieved on the console.
             // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
-            console.log(received_data[0].email);
+            console.log(data.email);
             // puts the relevant data into the on street textbox
             //document.getElementById('onStreet').value = recieved_data.on_street;
           });
