@@ -7,16 +7,16 @@ var path = require('path');
 
 app.use(express.static(__dirname));
 
-//var check;
-// db.serialize(function() {
-//
-//   db.run("CREATE TABLE if not exists Bob (email Text)");
-//   var createUser = db.prepare("INSERT INTO Users Values (?)");
-//
-//   createUser.run("blahblahblah");
-//   createUser.finalize();
-//
-// });
+var check;
+db.serialize(function() {
+
+  db.run("CREATE TABLE if not exists Bob (email Text)");
+  var createUser = db.prepare("INSERT INTO Users Values (?)");
+
+  createUser.run("blahblahblah");
+  createUser.finalize();
+
+});
 
 //db.close();
 
@@ -77,7 +77,9 @@ with fields: name, school, bio, date_created.
 @param userID
 @return object with biographical info
 */
-function findUserInfo(user, response) {find
+function findUserInfo(user, response) {
+
+}
 
 /**
 Get a user's saved problems.
@@ -190,7 +192,7 @@ function findSolution(problemID, response) {
     console.log("solution" + solution);
     response.send(solution);
   });
-}
+};
 
 /**
 Get a tag by ID from table of all tags.
@@ -201,4 +203,4 @@ Get a tag by ID from table of all tags.
 */
 function findTag(tag, response) {
 
-}
+};
