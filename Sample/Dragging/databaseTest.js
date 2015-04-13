@@ -7,16 +7,26 @@ var path = require('path');
 
 app.use(express.static(__dirname));
 
-var check;
-db.serialize(function() {
+// var check;
+// db.serialize(function() {
 
-  db.run("CREATE TABLE if not exists Bob (email Text)");
-  var createUser = db.prepare("INSERT INTO Users Values (?)");
+//   db.run("CREATE TABLE if not exists Bob (email Text)");
+//   var createUser = db.prepare("INSERT INTO Users Values (?)");
 
-  createUser.run("blahblahblah");
-  createUser.finalize();
+//   createUser.run("blahblahblah");
+//   createUser.finalize();
 
-});
+// });
+//var check;
+// db.serialize(function() {
+//
+//   db.run("CREATE TABLE if not exists Bob (email Text)");
+//   var createUser = db.prepare("INSERT INTO Users Values (?)");
+//
+//   createUser.run("blahblahblbah");
+//   createUser.finalize();
+//
+// });
 
 //db.close();
 
@@ -50,7 +60,7 @@ Get a user's email.
 function findEmail(user, response) {
   console.log("findemail");
   db.all('SELECT email FROM Users WHERE userID = ' + user, function(err, email) {
-    console.log("email" + email);
+    console.log("email " + email);
     response.send(email);
   });
 }
@@ -74,7 +84,7 @@ function findPassword(userID, response) {
 Get a user's biographical info as an object
 with fields: name, school, bio, date_created.
 
-@param userID
+@param int userID
 @return object with biographical info
 */
 function findUserInfo(user, response) {
@@ -84,8 +94,8 @@ function findUserInfo(user, response) {
 /**
 Get a user's saved problems.
 
-@param userID
-@return array of problem id's
+@param int userID
+@return int[] array of problem id's
 */
 function findSavedProblems(user, response) {
   //get name of saved table
@@ -95,7 +105,7 @@ function findSavedProblems(user, response) {
 /**
 Get a user's custom worksheets.
 
-@param userID
+@param int userID
 @return object mapping worksheet id's to arrays of problem id's
 */
 function findCustomWorksheets(user, response) {
@@ -145,9 +155,9 @@ function findTopic(problem, response) {
 /**
 Get a problem's associated tags.
 
-@param problem's ID
+@param int problemID
 @param response NodeJS data handler
-@return array of tags
+@return string[] array of tags
 */
 function findProblemTags(problemID, response) {
 
@@ -171,7 +181,7 @@ function findCreator(problem, response) {
 /**
 Get the date and time of a problem's creation or modification.
 
-@param userID
+@param int userID
 @param response NodeJS data handler
 @return Date object with fields: created, modified.
 */
@@ -197,9 +207,9 @@ function findSolution(problemID, response) {
 /**
 Get a tag by ID from table of all tags.
 
-@param tagID
+@param int tagID
 @param response NodeJS data handler
-@return tag contents
+@return string tag contents
 */
 function findTag(tag, response) {
 
