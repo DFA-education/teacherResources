@@ -22,20 +22,6 @@ app.use(express.static(__dirname));
 
 //DATABASE QUERY FUNCTIONS
 
-/**
-Get a user's email.
-
-@param userID
-@return user's email
-*/
-function findEmail(user, response) {
-  console.log("findemail");
-  db.all('select email from Users where userID = ' + user, function(err, email) {
-    console.log("email" + email);
-    response.send(email)
-  });
-}
-
 app.get('/',function(request,response) {
   console.log("appget");
   response.header('Access-Control-Allow-Origin', "*");
@@ -44,18 +30,44 @@ app.get('/',function(request,response) {
     console.log("request");
     findEmail(request.query.user, response);
   }
+
+  if (request.query.type === "passwordRequest") {
+    console.log("request");
+    findPassword(request.query.user, response);
+  }
 });
 
 app.listen(1337);
 console.log('Listening on port 1337');
+
+/**
+Get a user's email.
+
+@param int userID
+@param response NodeJS data handler
+@return string user's email
+*/
+function findEmail(user, response) {
+  console.log("findemail");
+  db.all('SELECT email FROM Users WHERE userID = ' + user, function(err, email) {
+    console.log("email" + email);
+    response.send(email);
+  });
+}
+
 /**
 Get a user's password.
 
-@param userID
-@return user's hashed password
+@param int userID
+@param response NodeJS data handler
+@return string user's hashed password
 */
-function getPassword(user) {
-
+function findPassword(userID, response) {
+  console.log("findpassword");
+  db.all('SELECT password FROM Users WHERE userID = ' + userID, function(err, pw) {
+    console.log("pw" + pw);
+    response.send(pw);
+  });
 }
 
 /**
@@ -65,107 +77,128 @@ with fields: name, school, bio, date_created.
 @param userID
 @return object with biographical info
 */
-function getUserInfo(user) {
-
-}
+function findUserInfo(user, response) {find
 
 /**
-Get the name of the table containing a user's saved problems.
+Get a user's saved problems.
 
 @param userID
-@return table name
+@return array of problem id's
 */
-function getSavedProblems(user) {
+function findSavedProblems(user, response) {
   //get name of saved table
   //get questions matching
 }
 
 /**
-Get the name of the table containing a user's custom worksheets.
+Get a user's custom worksheets.
 
 @param userID
-@return table name
+@return object mapping worksheet id's to arrays of problem id's
 */
-function get(user) {
+function findCustomWorksheets(user, response) {
 
 }
 
 /**
 Get the date and time of a user's account creation or modification.
 
-@param userID
+@param int userID
 @return Date object with fields: created, modified.
 */
-function getDate(user) {
+function findDate(userID, response) {
 
 }
 
 /**
 Get a problem's content.
 
-@param problemID
-@return problem content
+@param int problemID
+@param response NodeJS data handler
+@return string problem content
 */
-function getContent(problem) {
-
+function findContent(problemID, response) {
+  console.log("getContent");
+  db.all('SELECT content FROM Problems WHERE problemID = ' + problemID, function(err, content) {
+    console.log("content" + content);
+    response.send(content);
+  });
 }
 
 /**
 Get a problem's associated topic.
 
-@param problemID
-@return topic of problem
+@param int problemID
+@param response NodeJS data handler
+@return string topic of problem
 */
-function getTopic(problem) {
-
+function findTopic(problem, response) {
+  console.log("getTopic");
+  db.all('SELECT topic FROM Problems WHERE problemID = ' + problemID, function(err, topic) {
+    console.log("topic" + topic);
+    response.send(topic);
+  });
 }
 
 /**
 Get a problem's associated tags.
 
 @param problem's ID
+@param response NodeJS data handler
 @return array of tags
 */
-function getProblemTags(problemID) {
+function findProblemTags(problemID, response) {
 
 }
 
 /**
 Get the user who uploaded a problem.
 
-@param problemID
-@return userID
+@param int problemID
+@param response NodeJS data handler
+@return int userID
 */
-function getCreator(problem) {
-
+function findCreator(problem, response) {
+  console.log("getCreator");
+  db.all('SELECT creator FROM Problems WHERE problemID = ' + problemID, function(err, creator) {
+    console.log("creator" + creator);
+    response.send(creator);
+  });
 }
 
 /**
 Get the date and time of a problem's creation or modification.
 
 @param userID
+@param response NodeJS data handler
 @return Date object with fields: created, modified.
 */
-function getDate(problem) {
+function findDate(problem, response) {
 
 }
 
 /**
 Get a problem's associated solution.
 
-@param problem's ID
-@return solution
+@param int problem's ID
+@param response NodeJS data handler
+@return string solution
 */
-function getSolution(problemID) {
-
+function findSolution(problemID, response) {
+  console.log("getSolution");
+  db.all('SELECT solution FROM Problems WHERE problemID = ' + problemID, function(err, solution) {
+    console.log("solution" + solution);
+    response.send(solution);
+  });
 }
 
 /**
 Get a tag by ID from table of all tags.
 
 @param tagID
+@param response NodeJS data handler
 @return tag contents
 */
-function getTag(tag) {
+function findTag(tag, response) {
 
 }

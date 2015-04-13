@@ -17,10 +17,10 @@
         // first argument: port,
         // second: data to send over,
         // third: function that specifies what to do with the data that is recieved
-        $.get('http://127.0.0.1:1337/', user, function(recieved_data){
+        $.get('http://127.0.0.1:1337/', user, function(received_data){
             // prints the data recieved on the console.
             // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
-            console.log(recieved_data[0].email);
+            console.log(received_data[0].email);
             // puts the relevant data into the on street textbox
             //document.getElementById('onStreet').value = recieved_data.on_street;
           });
