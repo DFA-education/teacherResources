@@ -35,11 +35,30 @@ app.get('/',function(request,response) {
   } else if (request.query.type === "userInfoRequest") {
     console.log("request");
     findUserInfo(request.query.user, response);
-  } else if (request.query.type === "")
+  } else if (request.query.type === "problemsRequest") {
+    console.log("request");
+    findAllProblemContents(response);
+  } else if (request.query.type === "problemTagsRequest") {
+    console.log("request");
+    findProblemTags(request.query.problem, response);
+  }
 });
 
 app.listen(1337);
 console.log('Listening on port 1337');
+
+/**
+Get contents of all problems in database.
+
+@param response NodeJS data handler
+@return string[] contents of all problemss
+*/
+function findAllProblemContents(response) {
+  console.log("findProblems");
+  db.all('SELECT problemContent FROM Problems', function(err, contents) {
+    response.send(contents);
+  });
+}
 
 /**
 Get a user's email.
