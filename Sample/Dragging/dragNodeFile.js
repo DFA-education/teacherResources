@@ -28,22 +28,27 @@ function getTableValue(tableType, response){
 	})
 }
 
-// app.post('/'. function(req, res){
-// 	if (req.body.data.type === 'saved'){
-// 		addToDatabase(data,res)
-// 	}
-// });
+app.post('/', function(req, res){
+	res.header('Access-Control-Allow-Origin', "*");
+	console.log(req.body);
+	if (req.body.type === 'saved'){
+		addToDatabase(req.body,res)
+		console.log(req.body.type);
+	}
+});
 
-// function addToDatabase(data,res){
-//   db.run("CREATE TABLE if not exists BobTestStore (projectID Int, currentProject TEXT)");
-//   var createCurrent = db.prepare("INSERT INTO BobTestStore Values (?, ?)");
-//   createCurrent.run(data.projectID, data.currentProject);
-//   createCurrent.finalize();
-//   db.each("SELECT * From BobTestSTore", function(err, dataInTable) {
-//       console.log(dataInTable);
-//   });
-//   res.send(dataInTable);
-// }
+function addToDatabase(data,res){
+  // db.run("CREATE TABLE if not exists BobTestStore (projectID Int, currentProject TEXT)");
+  var createCurrent = db.prepare("INSERT INTO BobTestStore Values (?, ?)");
+  createCurrent.run(data.projectID, data.currentProject);
+  // createCurrent.finalize();
+  // allData = [];
+  db.all("SELECT * From BobTestSTore", function(err, dataInTable) {
+      console.log("data in table " + dataInTable);
+      res.send(dataInTable);
+  });
+  // res.send(allData);
+}
 // handle requests from client
 app.get('/',function(request,response){
 	response.header('Access-Control-Allow-Origin', "*");
