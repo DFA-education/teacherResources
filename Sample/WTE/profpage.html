@@ -44,6 +44,55 @@
                     });
 
             });
+
+              function getProblem(problemID){
+                console.log("getProblem");
+                // creates json object to send to server
+                var problem = {
+                    type: "problemRequest",
+                    problem: problemID
+                    // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
+                  };
+                // talks to server
+                // first argument: port,
+                // second: data to send over,
+                // third: function that specifies what to do with the data that is recieved
+                $.get('http://127.0.0.1:1337/', problem, function(recieved_data){
+                    // prints the data recieved on the console.
+                    // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
+                    console.log(recieved_data[0].problem);
+                    // puts the relevant data into the on street textbox
+                    //document.getElementById('onStreet').value = recieved_data.on_street;
+                  });
+                  // reset textbox value
+                  //routeInput.value = "";
+              }
+        function getTableValue(){
+        // creates json object to send to server
+        var tableRequestData = {
+            type: "getTableValue",
+
+            // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
+
+            tableType: "Questions"
+          };
+        // talks to server
+        // first argument: port,
+        // second: data to send over,
+        // third: function that specifies what to do with the data that is recieved
+        $.get('http://127.0.0.1:1337/', tableRequestData, function(recieved_data){
+            // prints the data recieved on the console.
+            // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
+            console.log(recieved_data);
+            // puts the relevant data into the on street textbox
+            var item = recieved_data[0];
+              var question_item_div = document.createElement("div");
+              $(question_item_div).attr('data-id', item.questionID);
+              $(question_item_div).text(item.questionText)
+              $("#caroline").append(question_item_div);
+            
+          });
+      }
         </script>
 
 
@@ -92,7 +141,9 @@
               </div>        
             </div>
             <div class="eight wide column">
-              <div class="ui segment">
+              <div class="ui segment" name ="caroline">
+              hiihihihihi 
+              <button id = 'saveTableValue' onclick = "getTableValue()"> save value to database</button>
               </div>    
             </div>
             <div class="four wide column">
