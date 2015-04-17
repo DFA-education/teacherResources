@@ -20,32 +20,47 @@ app.use(express.static(__dirname));
 
 //db.close();
 
-//DATABASE QUERY FUNCTIONS
-
 app.get('/',function(request,response) {
   console.log("appget");
   response.header('Access-Control-Allow-Origin', "*");
 
   if (request.query.type === "emailRequest") {
-    console.log("request");
     findEmail(request.query.user, response);
   } else if (request.query.type === "passwordRequest") {
-    console.log("request");
     findPassword(request.query.user, response);
   } else if (request.query.type === "userInfoRequest") {
-    console.log("request");
     findUserInfo(request.query.user, response);
-  } else if (request.query.type === "problemsRequest") {
-    console.log("request");
+  } else if (request.query.type === "allProblemsRequest") {
     findAllProblemContents(response);
+  } else if (request.query.type == "problemRequest") {
+    findProblemContent(request.query.problem, response);
   } else if (request.query.type === "problemTagsRequest") {
-    console.log("request");
     findProblemTags(request.query.problem, response);
+  } else if (request.query.type === "allProblemsRequest") {
+    findAllProblemContents(response);
+  } else if (request.query.type === "savedProblemsRequest") {
+    findSavedProblems(request.query.user, response);
+  } else if (request.query.type === "customWorksheetsRequest") {
+    findCustomWorksheets(request.query.user, response);
+  } else if (request.query.type === "accountDateRequest") {
+    findAccountDate(request.query.user, response);
+  } else if (request.query.type === "problemTopicRequest") {
+    findProblemTopic(request.query.problem, response);
+  } else if (request.query.type === "problemCreatorRequest") {
+    findProblemCreator(request.query.problem, response);
+  } else if (request.query.type === "problemDateRequest") {
+    findProblemDate(request.query.problem, response);
+  } else if (request.query.type === "problemSolutionRequest") {
+    findSolution(request.query.problem, response);
+  } else if (request.query.type == "tagRequest") {
+    findTag(request.query.tag, response);
   }
 });
 
 app.listen(1337);
 console.log('Listening on port 1337');
+
+//DATABASE QUERY FUNCTIONS
 
 /**
 Get contents of all problems in database.
@@ -174,7 +189,7 @@ Get a problem's content.
 @param response NodeJS data handler
 @return string problem content
 */
-function findContent(problemID, response) {
+function findProblemContent(problemID, response) {
   console.log("findContent");
   db.all('SELECT content FROM Problems WHERE problemID = ' + problemID, function(err, content) {
     console.log("content" + content);
@@ -189,7 +204,7 @@ Get a problem's associated topic.
 @param response NodeJS data handler
 @return string topic of problem
 */
-function findTopic(problemID, response) {
+function findProblemTopic(problemID, response) {
   console.log("findTopic");
   db.all('SELECT topic FROM Problems WHERE problemID = ' + problemID, function(err, topic) {
     console.log("topic" + topic);
@@ -233,7 +248,7 @@ Get the user who uploaded a problem.
 @param response NodeJS data handler
 @return int userID
 */
-function findCreator(problemID, response) {
+function findProblemCreator(problemID, response) {
   console.log("findCreator");
   db.all('SELECT creator FROM Problems WHERE problemID = ' + problemID.toString(),
   function(err, creator) {
@@ -283,5 +298,9 @@ Get a tag by ID from table of all tags.
 @return string tag contents
 */
 function findTag(tagID, response) {
-
+  console.log("findTag");
+  db.all('SELECT tag_content FROM Tags_all WHERE tagID = ' + tagID[i].toString(),
+  function(err, tag_content) {
+    response.send(tag_content);
+  });
 }
