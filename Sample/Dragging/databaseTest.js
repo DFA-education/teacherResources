@@ -253,12 +253,13 @@ Get the user who uploaded a problem.
 @return int userID
 */
 function findProblemCreator(problemID, response) {
-  console.log("findCreator");
-  db.all('SELECT creator FROM Problems WHERE problemID = ' + problemID.toString(),
-  function(err, creator) {
-    console.log("creator" + creator);
-    response.send(creator);
-  });
+ console.log("findCreator");
+ db.all('SELECT userID FROM Problems WHERE problemID = ' + problemID.toString(),
+ function(err, ID) {
+   // user = ID[0].userID;
+   console.log("creator" + ID);
+   response.send(ID[0]);
+ });
 }
 
 /**
@@ -269,14 +270,14 @@ Get the date and time of a problem's creation and most recent modification.
 @return Date object with fields: created, modified.
 */
 function findProblemDate(problemID, response) {
-  console.log("findProblemDate");
-  dateInfo = {dateCreated : null, dateModified : null};
-  db.all('SELECT dateCreated, dateModified FROM Problems WHERE problemID = ' + problemID.toString(),
-  function(err, data) {
-    dateInfo.dateCreated = data.dateCreated;
-    dateInfo.dateModified = data.dateModified;
-    response.send(dateInfo);
-  });
+ console.log("findProblemDate");
+ dateInfo = {dateCreated : null, dateModified : null};
+ db.all('SELECT dateCreated, dateModified FROM Problems WHERE problemID = ' + problemID.toString(),
+ function(err, data) {
+   dateInfo.dateCreated = data[0].dateCreated;
+   dateInfo.dateModified = data[0].dateModified;
+   response.send(dateInfo);
+ });
 }
 
 /**
@@ -287,11 +288,11 @@ Get a problem's associated solution.
 @return string solution
 */
 function findSolution(problemID, response) {
-  console.log("findSolution");
-  db.all('SELECT solution FROM Problems WHERE problemID = ' + problemID, function(err, solution) {
-    console.log("solution" + solution);
-    response.send(solution);
-  });
+ console.log("findSolution");
+ db.all('SELECT solution FROM Problems WHERE problemID = ' + problemID, function(err, solution) {
+   console.log("solution" + solution);
+   response.send(solution[0]);
+ });
 }
 
 /**
@@ -302,9 +303,9 @@ Get a tag by ID from table of all tags.
 @return string tag contents
 */
 function findTag(tagID, response) {
-  console.log("findTag");
-  db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID.toString(),
-  function(err, tagContent) {
-    response.send(tagContent);
-  });
+ console.log("findTag");
+ db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID.toString(),
+ function(err, tagContent) {
+   response.send(tagContent[0]);
+ });
 }
