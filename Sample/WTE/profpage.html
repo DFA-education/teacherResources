@@ -18,7 +18,7 @@
                 var ele = document.getElementById(elementID);
                 if (!ele) {
                     alert("no such element");
-                    return;
+                    return; 
                 }
                 console.log(ele);
                 // get all pages, loop through them and hide them
@@ -88,7 +88,12 @@
             var item = recieved_data[0];
               var question_item_div = document.createElement("div");
               $(question_item_div).attr('data-id', item.questionID);
-              $(question_item_div).text(item.questionText)
+              
+              // var list_item_inner_span = document.createElement("span");
+              // $(list_item_inner_span).text(item.questionText);
+
+              $(question_item_div).text(item.questionText);
+              // $(question_item_div).append(list_item_inner_span);
               $("#caroline").append(question_item_div);
             
           });
@@ -141,7 +146,7 @@
               </div>        
             </div>
             <div class="eight wide column">
-              <div class="ui segment" name ="caroline">
+              <div class="ui segment" id ="caroline">
               hiihihihihi 
               <button id = 'saveTableValue' onclick = "getTableValue()"> save value to database</button>
               </div>    
