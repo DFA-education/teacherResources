@@ -60,7 +60,7 @@ app.get('/',function(request,response) {
 app.listen(1337);
 console.log('Listening on port 1337');
 
-//DATABASE QUERY FUNCTIONS
+/////////////// DATABASE QUERY FUNCTIONS ////////////////
 
 /**
 Get contents of all problems in database.
@@ -107,7 +107,7 @@ function findPassword(userID, response) {
 
 /**
 Get a user's biographical info as an object
-with fields: name, school, bio, date_created.
+with fields: name, school, bio, dateCreated.
 
 @param int userID
 @param response NodeJS data handler
@@ -115,13 +115,13 @@ with fields: name, school, bio, date_created.
 */
 function findUserInfo(userID, response) {
   console.log("findUserInfo");
-  info = {name:null, school:null, bio:null, date_created:null};
-  db.all('SELECT fullName, school, bio, dateCreated FROM Users WHERE userID = ' + userID,
+  info = {teacher:null, school:null, bio:null, dateCreated:null};
+  db.all('SELECT name AS teacher, school, bio, dateCreated FROM Users WHERE userID = ' + userID,
   function(err, data) {
-    info.fullName = data.fullName;
+    info.teacher = data.teacher;
     info.school = data.school;
     info.bio = data.bio;
-    info.date_created = data.dateCreated;
+    info.dateCreated = data.dateCreated;
     response.send(info);
   });
 }
@@ -173,11 +173,11 @@ Get the date and time of a user's account creation or most recent modification.
 */
 function findAccountDate(userID, response) {
   console.log("findAccountDate");
-  dateInfo = {date_created : null, date_modified : null};
-  db.all('SELECT date_created, date_modified FROM Users WHERE userID = ' + userID.toString(),
+  dateInfo = {dateCreated : null, dateModified : null};
+  db.all('SELECT dateCreated, dateModified FROM Users WHERE userID = ' + userID.toString(),
   function(err, data) {
-    dateInfo.date_created = data.date_created;
-    dateInfo.date_modified = data.data_modified;
+    dateInfo.dateCreated = data.dateCreated;
+    dateInfo.dateModified = data.dateModified;
     response.send(dateInfo);
   });
 }
@@ -224,7 +224,7 @@ function findProblemTags(problemID, response) {
   tagIDs = [];
   tags = [];
   //There's probably a better way to do this...
-  db.all('SELECT * FROM Problem_tags WHERE problemID = ' + problemID.toString(),
+  db.all('SELECT * FROM Problem_Tags WHERE problemID = ' + problemID.toString(),
   function(err, data) {
     //get tagIDs
     for (var i = 0; i < data.length; i++) {
@@ -232,9 +232,9 @@ function findProblemTags(problemID, response) {
     }
     //get tag contents for each tagID
     for (var i = 0; i < tagIDs.length; i++) {
-      db.all('SELECT tag_content FROM Tags_all WHERE tagID = ' + tagID[i].toString(),
-      function(err, tag_content) {
-        tags.push(tag_content);
+      db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID[i].toString(),
+      function(err, tagContent) {
+        tags.push(tagContent);
       });
     }
     response.send(tags);
@@ -266,11 +266,11 @@ Get the date and time of a problem's creation and most recent modification.
 */
 function findProblemDate(problemID, response) {
   console.log("findProblemDate");
-  dateInfo = {date_created : null, date_modified : null};
-  db.all('SELECT date_created, date_modified FROM Problems WHERE problemID = ' + problemID.toString(),
+  dateInfo = {dateCreated : null, dateModified : null};
+  db.all('SELECT dateCreated, dateModified FROM Problems WHERE problemID = ' + problemID.toString(),
   function(err, data) {
-    dateInfo.date_created = data.date_created;
-    dateInfo.date_modified = data.data_modified;
+    dateInfo.dateCreated = data.dateCreated;
+    dateInfo.dateModified = data.dateModified;
     response.send(dateInfo);
   });
 }
@@ -299,8 +299,8 @@ Get a tag by ID from table of all tags.
 */
 function findTag(tagID, response) {
   console.log("findTag");
-  db.all('SELECT tag_content FROM Tags_all WHERE tagID = ' + tagID[i].toString(),
-  function(err, tag_content) {
-    response.send(tag_content);
+  db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID[i].toString(),
+  function(err, tagContent) {
+    response.send(tagContent);
   });
 }

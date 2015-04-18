@@ -5,9 +5,9 @@
   </head>
   <body>
     <script>
-      userID = 1;
+      //////////////// HTTP REQUEST FUNCTIONS //////////////////
       function getEmail(userID){
-        console.log("getEmail");
+        console.log("get user" + userID + " email");
         // creates json object to send to server
         var request = {
             type: "emailRequest",
@@ -18,7 +18,7 @@
         // first argument: port,
         // second: data to send over,
         // third: function that specifies what to do with the data that is recieved
-        $.get('http://127.0.0.1:1337/', request, function(data){
+        $.get('http://127.0.0.1:1337/', request, function(data) {
             console.log(data);
             // prints the data recieved on the console.
             // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
@@ -30,7 +30,40 @@
           //routeInput.value = "";
       }
 
+      function getUserInfo(userID) {
+        console.log("get user" + userID + " info");
+
+        var request = {
+          type : "userInfoRequest",
+          user : userID
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+          console.log(data[0].name);
+          console.log(data[0].email);
+          console.log(data[0].bio);
+          console.log(data[0].dateCreated);
+        });
+      }
+
+      function getSavedProblems(userID) {
+        console.log("get user" + userID + " saved problems");
+
+        var request = {
+          type: "savedProblemsRequest",
+          user: userID
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+          for (var i = 0; i < data.length; i++) {
+            console.log(data[0][i]);
+          }
+        });
+      }
+
     </script>
-    <button id = 'saveTableValue' onclick = "getEmail(1)"> save value to database</button>
+    <button id = 'saveTableValue' onclick = "getSavedProblems(1)"> save value to database</button>
   </body>
 </html>
