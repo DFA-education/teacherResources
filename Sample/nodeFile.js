@@ -41,6 +41,26 @@ function getTableValue(tableType, response){
 	})
 }
 
+//buttons to add to database
+app.post('/', function(req, res){
+  res.header('Access-Control-Allow-Origin', "*");
+  console.log(req);
+  if (req.type === 'save_question'){
+    addToDatabase(req , res)
+    console.log(req.type);
+  }
+});
+
+function addToDatabase(data,res){
+
+  var createCurrent = db.prepare("INSERT INTO savedQuestions Values (?)");
+  createCurrent.run(data.questionID);
+
+  db.all("SELECT * From savedQuestions", function(err, dataInTable) {
+      console.log("data in table " + dataInTable);
+      res.send(dataInTable);
+  });
+}
 
 // handle requests from client
 app.get('/',function(request,response){
