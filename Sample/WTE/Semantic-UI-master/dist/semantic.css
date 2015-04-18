@@ -660,6 +660,21 @@ input::selection {
   color: rgba(0, 0, 0, 0.8);
 }
 
+/* Ruth's css additions */
+.centerQuestions {
+  position: relative;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 0px 1px rgba(39, 41, 43, 0.15), 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
+  margin: 1rem 0em;
+  padding: 1em 1em;
+  border-radius: 0.2857rem;
+  border: none;
+}
+
+
+
+
+
 /*******************************
         Global Overrides
 *******************************/
