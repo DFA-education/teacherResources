@@ -4,6 +4,11 @@ var db = new sqlite3.Database('testQuery.db');
 var express = require('express');
 var app = express();
 var path = require('path');
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+   extended: true
+}));
 
 app.use(express.static(__dirname));
 
@@ -137,7 +142,7 @@ Get a user's saved problems.
 function findSavedProblems(userID, response) {
   console.log("findSavedProblems");
   problems = [];
-  db.all('SELECT * FROM Saved_' + userID.toString(), function(err, data) {
+  db.all('SELECT * FROM Saved_' + userID, function(err, data) {
     for (var i = 0; i < data.length; i++) {
       problems.push(data[i].problemID);
     }
@@ -225,23 +230,26 @@ Get a problem's associated tags.
 */
 function findProblemTags(problemID, response) {
   console.log("findProblemTags");
-  tagIDs = [];
-  tags = [];
+  var tagIDs = [];
+  //tags = [];
   //There's probably a better way to do this...
-  db.all('SELECT * FROM Problem_Tags WHERE problemID = ' + problemID.toString(),
+  db.all('SELECT * FROM Problem_Tags WHERE problemID = ' + problemID,
   function(err, data) {
     //get tagIDs
     for (var i = 0; i < data.length; i++) {
-      tagIDs.push(data[i][1]);
+      tagIDs.push(data[i].tagID);
     }
+
+    tagIDs = tagIDs.join();
+    console.log(tagIDs);
     //get tag contents for each tagID
-    for (var i = 0; i < tagIDs.length; i++) {
-      db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID[i].toString(),
-      function(err, tagContent) {
-        tags.push(tagContent);
-      });
-    }
-    response.send(tags);
+    db.all('SELECT tagContent FROM Tags_all WHERE tagID IN (' + tagIDs + ')',
+    function(err, tags) {
+      console.log(tags);
+      console.log(tagIDs);
+      response.send(tags);
+      //tags.push(tagContent);
+    });
   });
 }
 
@@ -254,7 +262,7 @@ Get the user who uploaded a problem.
 */
 function findProblemCreator(problemID, response) {
  console.log("findCreator");
- db.all('SELECT userID FROM Problems WHERE problemID = ' + problemID.toString(),
+ db.all('SELECT userID FROM Problems WHERE problemID = ' + problemID,
  function(err, ID) {
    // user = ID[0].userID;
    console.log("creator" + ID);
@@ -272,7 +280,7 @@ Get the date and time of a problem's creation and most recent modification.
 function findProblemDate(problemID, response) {
  console.log("findProblemDate");
  dateInfo = {dateCreated : null, dateModified : null};
- db.all('SELECT dateCreated, dateModified FROM Problems WHERE problemID = ' + problemID.toString(),
+ db.all('SELECT dateCreated, dateModified FROM Problems WHERE problemID = ' + problemID,
  function(err, data) {
    dateInfo.dateCreated = data[0].dateCreated;
    dateInfo.dateModified = data[0].dateModified;
@@ -304,7 +312,7 @@ Get a tag by ID from table of all tags.
 */
 function findTag(tagID, response) {
  console.log("findTag");
- db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID.toString(),
+ db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID,
  function(err, tagContent) {
    response.send(tagContent[0]);
  });
