@@ -63,7 +63,96 @@
         });
       }
 
+      function getTag(tagID) {
+        console.log("get tag" + tagID + " saved tag");
+
+        var request = {
+          type: "tagRequest",
+          tag: tagID
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+          // for (var i = 0; i < data.length; i++) {
+          //   console.log(data[0][i]);
+          // }
+        });
+      }
+
+      function getSolution(problemID) {
+        console.log("get solution" + problemID + " saved solution");
+
+        var request = {
+          type: "problemSolutionRequest",
+          problem: 1
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+          // for (var i = 0; i < data.length; i++) {
+          //   console.log(data[0][i]);
+          // }
+        });
+      }
+
+      function getProblemDate(problemID) {
+        console.log("get problem date" + problemID + " problemDate");
+
+        var request = {
+          type: "problemDateRequest",
+          problem: 1
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+          // for (var i = 0; i < data.length; i++) {
+          //   console.log(data[0][i]);
+          // }
+        });
+      }
+
+      function getProblemCreator(problemID) {
+        console.log("get problem creator" + problemID + " problemCreator");
+
+        var request = {
+          type: "problemCreatorRequest",
+          problem: 1
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          
+          console.log(data);
+          // for (var i = 0; i < data.length; i++) {
+          //   console.log(data[0][i]);
+          // }
+        });
+      }
+
+      function getProblemTags(problemID) {
+        console.log("get problem tags" + problemID + " problemTags");
+
+        var request = {
+          type: "problemTagsRequest",
+          problem: 1
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          
+          console.log(data);
+          // for (var i = 0; i < data.length; i++) {
+          //   console.log(data[0][i]);
+          // }
+        });
+      }
+
+
+
     </script>
     <button id = 'saveTableValue' onclick = "getSavedProblems(1)"> save value to database</button>
+    <button id = 'getTag' onclick = "getTag(1)"> gettab</button>
+    <button id = 'getSolution' onclick = "getSolution(1)"> getSolution</button>
+    <button id = 'getProblemDate' onclick = "getProblemDate(1)"> getProblemDate</button>
+    <button id = 'getProblemCreator' onclick = "getProblemCreator(1)"> getProblemCreator</button>
+    <button id = 'getProblemTags' onclick = "getProblemTags(1)"> getProblemTags</button>
   </body>
 </html>
