@@ -6,6 +6,7 @@
   <body>
     <script>
       //////////////// HTTP REQUEST FUNCTIONS //////////////////
+
       function getEmail(userID){
         console.log("get user" + userID + " email");
         // creates json object to send to server
@@ -31,8 +32,6 @@
       }
 
       function getUserInfo(userID) {
-        console.log("get user" + userID + " info");
-
         var request = {
           type : "userInfoRequest",
           user : userID
@@ -40,16 +39,14 @@
 
         $.get('http://127.0.0.1:1337/', request, function(data) {
           console.log(data);
-          console.log(data[0].name);
-          console.log(data[0].email);
-          console.log(data[0].bio);
-          console.log(data[0].dateCreated);
+          console.log(data.teacher);
+          console.log(data.school);
+          console.log(data.biography);
+          console.log(data.dateCreated);
         });
       }
 
       function getSavedProblems(userID) {
-        console.log("get user" + userID + " saved problems");
-
         var request = {
           type: "savedProblemsRequest",
           user: userID
@@ -57,102 +54,147 @@
 
         $.get('http://127.0.0.1:1337/', request, function(data) {
           console.log(data);
-          for (var i = 0; i < data.length; i++) {
-            console.log(data[0][i]);
-          }
+        });
+      }
+
+      function getCustomWorksheets(userID) {
+        var request = {
+          type: "customWorksheetsRequest",
+          user: userID
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+          //data[i] is worksheet i
+          //data[i] is an array of problem tags
+          console.log(data[1][0]);
+          console.log(data[1][1]);
+        });
+      }
+
+      function getAccountDate(userID) {
+        var request = {
+          type: "accountDateRequest",
+          user: userID
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+          console.log(data.dateCreated);
+          console.log(data.dateModified);
+        });
+      }
+
+      function getProblem(problemID) {
+        var request = {
+          type: "problemRequest",
+          problem: problemID
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
+        });
+      }
+
+      function getProblemTopic(problemID) {
+        var request = {
+          type: "problemTopicRequest",
+          problem: problemID
+        };
+
+        $.get('http://127.0.0.1:1337/', request, function(data) {
+          console.log(data);
         });
       }
 
       function getTag(tagID) {
-        console.log("get tag" + tagID + " saved tag");
+         console.log("get tag" + tagID + " saved tag");
 
-        var request = {
-          type: "tagRequest",
-          tag: tagID
-        };
+         var request = {
+           type: "tagRequest",
+           tag: tagID
+         };
 
-        $.get('http://127.0.0.1:1337/', request, function(data) {
-          console.log(data);
-          // for (var i = 0; i < data.length; i++) {
-          //   console.log(data[0][i]);
-          // }
-        });
-      }
+         $.get('http://127.0.0.1:1337/', request, function(data) {
+           console.log(data);
+           // for (var i = 0; i < data.length; i++) {
+           //   console.log(data[0][i]);
+           // }
+         });
+        }
 
-      function getSolution(problemID) {
-        console.log("get solution" + problemID + " saved solution");
+        function getSolution(problemID) {
+         console.log("get solution" + problemID + " saved solution");
 
-        var request = {
-          type: "problemSolutionRequest",
-          problem: 1
-        };
+         var request = {
+           type: "problemSolutionRequest",
+           problem: 1
+         };
 
-        $.get('http://127.0.0.1:1337/', request, function(data) {
-          console.log(data);
-          // for (var i = 0; i < data.length; i++) {
-          //   console.log(data[0][i]);
-          // }
-        });
-      }
+         $.get('http://127.0.0.1:1337/', request, function(data) {
+           console.log(data);
+           // for (var i = 0; i < data.length; i++) {
+           //   console.log(data[0][i]);
+           // }
+         });
+        }
 
-      function getProblemDate(problemID) {
-        console.log("get problem date" + problemID + " problemDate");
+        function getProblemDate(problemID) {
+         console.log("get problem date" + problemID + " problemDate");
 
-        var request = {
-          type: "problemDateRequest",
-          problem: 1
-        };
+         var request = {
+           type: "problemDateRequest",
+           problem: 1
+         };
 
-        $.get('http://127.0.0.1:1337/', request, function(data) {
-          console.log(data);
-          // for (var i = 0; i < data.length; i++) {
-          //   console.log(data[0][i]);
-          // }
-        });
-      }
+         $.get('http://127.0.0.1:1337/', request, function(data) {
+           console.log(data);
+           // for (var i = 0; i < data.length; i++) {
+           //   console.log(data[0][i]);
+           // }
+         });
+        }
 
-      function getProblemCreator(problemID) {
-        console.log("get problem creator" + problemID + " problemCreator");
+        function getProblemCreator(problemID) {
+         console.log("get problem creator" + problemID + " problemCreator");
 
-        var request = {
-          type: "problemCreatorRequest",
-          problem: 1
-        };
+         var request = {
+           type: "problemCreatorRequest",
+           problem: 1
+         };
 
-        $.get('http://127.0.0.1:1337/', request, function(data) {
-          
-          console.log(data);
-          // for (var i = 0; i < data.length; i++) {
-          //   console.log(data[0][i]);
-          // }
-        });
-      }
+         $.get('http://127.0.0.1:1337/', request, function(data) {
 
-      function getProblemTags(problemID) {
-        console.log("get problem tags" + problemID + " problemTags");
+           console.log(data);
+           // for (var i = 0; i < data.length; i++) {
+           //   console.log(data[0][i]);
+           // }
+         });
+        }
 
-        var request = {
-          type: "problemTagsRequest",
-          problem: 1
-        };
+        function getProblemTags(problemID) {
+         console.log("get problem tags" + problemID + " problemTags");
 
-        $.get('http://127.0.0.1:1337/', request, function(data) {
-          
-          console.log(data);
-          // for (var i = 0; i < data.length; i++) {
-          //   console.log(data[0][i]);
-          // }
-        });
-      }
+         var request = {
+           type: "problemTagsRequest",
+           problem: 1
+         };
 
+         $.get('http://127.0.0.1:1337/', request, function(data) {
 
+           console.log(data);
+           // for (var i = 0; i < data.length; i++) {
+           //   console.log(data[0][i]);
+           // }
+         });
+        }
 
     </script>
     <button id = 'saveTableValue' onclick = "getSavedProblems(1)"> save value to database</button>
-    <button id = 'getTag' onclick = "getTag(1)"> gettab</button>
-    <button id = 'getSolution' onclick = "getSolution(1)"> getSolution</button>
-    <button id = 'getProblemDate' onclick = "getProblemDate(1)"> getProblemDate</button>
-    <button id = 'getProblemCreator' onclick = "getProblemCreator(1)"> getProblemCreator</button>
-    <button id = 'getProblemTags' onclick = "getProblemTags(1)"> getProblemTags</button>
+     <button id = 'getTag' onclick = "getTag(1)"> gettab</button>
+     <button id = 'getSolution' onclick = "getSolution(1)"> getSolution</button>
+     <button id = 'getProblemDate' onclick = "getProblemDate(1)"> getProblemDate</button>
+     <button id = 'getProblemCreator' onclick = "getProblemCreator(1)"> getProblemCreator</button>
+
   </body>
 </html>

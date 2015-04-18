@@ -115,14 +115,15 @@ with fields: name, school, bio, dateCreated.
 */
 function findUserInfo(userID, response) {
   console.log("findUserInfo");
-  info = {teacher:null, school:null, bio:null, dateCreated:null};
-  db.all('SELECT name AS teacher, school, bio, dateCreated FROM Users WHERE userID = ' + userID,
+  var info = {teacher:null, school:null, bio:null, dateCreated:null};
+  db.all('SELECT name AS teacher, school, biography, dateCreated FROM Users WHERE userID = ' + userID,
   function(err, data) {
-    info.teacher = data.teacher;
-    info.school = data.school;
-    info.bio = data.bio;
-    info.dateCreated = data.dateCreated;
-    response.send(info);
+    //console.log(data[0]);
+    // info.teacher = data.teacher;
+    // info.school = data.school;
+    // info.bio = data.biography;
+    // info.dateCreated = data.dateCreated;
+    response.send(data[0]);
   });
 }
 
@@ -154,11 +155,15 @@ Get a user's custom worksheets.
 function findCustomWorksheets(userID, response) {
   console.log("findCustomWorksheets");
   worksheets = {};
-  db.all('SELECT * FROM Custom_' + userID.toString(), function(err, data) {
+  db.all('SELECT * FROM Custom_' + userID, function(err, data) {
+    console.log(data);
     for (var i = 0; i < data.length; i++) {
-      wID = data[i][1];
-      asdf
-      worksheets.wID = data[i][0]; //map problem
+      var wID = data[i].worksheetID;
+      if (wID in worksheets) {
+        worksheets[wID].push(data[i].problemID);
+      } else {
+        worksheets[wID] = [data[i].problemID];
+      }
     }
     response.send(worksheets);
   });
@@ -174,11 +179,12 @@ Get the date and time of a user's account creation or most recent modification.
 function findAccountDate(userID, response) {
   console.log("findAccountDate");
   dateInfo = {dateCreated : null, dateModified : null};
-  db.all('SELECT dateCreated, dateModified FROM Users WHERE userID = ' + userID.toString(),
+  db.all('SELECT dateCreated, dateModified FROM Users WHERE userID = ' + userID,
   function(err, data) {
-    dateInfo.dateCreated = data.dateCreated;
-    dateInfo.dateModified = data.dateModified;
-    response.send(dateInfo);
+    response.send(data[0]);
+    // dateInfo.dateCreated = data.dateCreated;
+    // dateInfo.dateModified = data.dateModified;
+    // response.send(dateInfo);
   });
 }
 
@@ -191,9 +197,8 @@ Get a problem's content.
 */
 function findProblemContent(problemID, response) {
   console.log("findContent");
-  db.all('SELECT content FROM Problems WHERE problemID = ' + problemID, function(err, content) {
-    console.log("content" + content);
-    response.send(content);
+  db.all('SELECT problemContent FROM Problems WHERE problemID = ' + problemID, function(err, content) {
+    response.send(content[0]);
   });
 }
 
@@ -207,8 +212,7 @@ Get a problem's associated topic.
 function findProblemTopic(problemID, response) {
   console.log("findTopic");
   db.all('SELECT topic FROM Problems WHERE problemID = ' + problemID, function(err, topic) {
-    console.log("topic" + topic);
-    response.send(topic);
+    response.send(topic[0]);
   });
 }
 
@@ -228,19 +232,16 @@ function findProblemTags(problemID, response) {
   function(err, data) {
     //get tagIDs
     for (var i = 0; i < data.length; i++) {
-      tagIDs.push(data[i].tagID);
+      tagIDs.push(data[i][1]);
     }
     //get tag contents for each tagID
     for (var i = 0; i < tagIDs.length; i++) {
-      console.log(tagIDs);
-      db.all('SELECT tagContent FROM Tags_All WHERE tagID = ' + tagIDs[i].toString(),
-      function(err, tagContentObj) {
-      	
-        tags.push(tagContentObj[0].tagContent);
-        console.log(tags);
-        response.send(tags);
+      db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID[i].toString(),
+      function(err, tagContent) {
+        tags.push(tagContent);
       });
-    } 
+    }
+    response.send(tags);
   });
 }
 
@@ -252,13 +253,13 @@ Get the user who uploaded a problem.
 @return int userID
 */
 function findProblemCreator(problemID, response) {
-  console.log("findCreator");
-  db.all('SELECT userID FROM Problems WHERE problemID = ' + problemID.toString(),
-  function(err, ID) {
-  	// user = ID[0].userID;
-    console.log("creator" + ID);
-    response.send(ID[0]);
-  });
+ console.log("findCreator");
+ db.all('SELECT userID FROM Problems WHERE problemID = ' + problemID.toString(),
+ function(err, ID) {
+   // user = ID[0].userID;
+   console.log("creator" + ID);
+   response.send(ID[0]);
+ });
 }
 
 /**
@@ -269,14 +270,14 @@ Get the date and time of a problem's creation and most recent modification.
 @return Date object with fields: created, modified.
 */
 function findProblemDate(problemID, response) {
-  console.log("findProblemDate");
-  dateInfo = {dateCreated : null, dateModified : null};
-  db.all('SELECT dateCreated, dateModified FROM Problems WHERE problemID = ' + problemID.toString(),
-  function(err, data) {
-    dateInfo.dateCreated = data[0].dateCreated;
-    dateInfo.dateModified = data[0].dateModified;
-    response.send(dateInfo);
-  });
+ console.log("findProblemDate");
+ dateInfo = {dateCreated : null, dateModified : null};
+ db.all('SELECT dateCreated, dateModified FROM Problems WHERE problemID = ' + problemID.toString(),
+ function(err, data) {
+   dateInfo.dateCreated = data[0].dateCreated;
+   dateInfo.dateModified = data[0].dateModified;
+   response.send(dateInfo);
+ });
 }
 
 /**
@@ -287,11 +288,11 @@ Get a problem's associated solution.
 @return string solution
 */
 function findSolution(problemID, response) {
-  console.log("findSolution");
-  db.all('SELECT solution FROM Problems WHERE problemID = ' + problemID, function(err, solution) {
-    console.log("solution" + solution);
-    response.send(solution[0]);
-  });
+ console.log("findSolution");
+ db.all('SELECT solution FROM Problems WHERE problemID = ' + problemID, function(err, solution) {
+   console.log("solution" + solution);
+   response.send(solution[0]);
+ });
 }
 
 /**
@@ -302,9 +303,9 @@ Get a tag by ID from table of all tags.
 @return string tag contents
 */
 function findTag(tagID, response) {
-  console.log("findTag");
-  db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID.toString(),
-  function(err, tagContent) {
-    response.send(tagContent[0]);
-  });
+ console.log("findTag");
+ db.all('SELECT tagContent FROM Tags_all WHERE tagID = ' + tagID.toString(),
+ function(err, tagContent) {
+   response.send(tagContent[0]);
+ });
 }
