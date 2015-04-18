@@ -2,6 +2,12 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
 
 //Load modules
 var sqlite3         =       require('sqlite3').verbose();
@@ -44,15 +50,14 @@ function getTableValue(tableType, response){
 //buttons to add to database
 app.post('/', function(req, res){
   res.header('Access-Control-Allow-Origin', "*");
-  console.log(req);
-  if (req.type === 'save_question'){
-    addToDatabase(req , res)
-    console.log(req.type);
+  console.log(req.body.type);
+  if (req.body.type === 'save_question'){
+    addToDatabase(req.body , res)
   }
 });
 
 function addToDatabase(data,res){
-
+	
   var createCurrent = db.prepare("INSERT INTO savedQuestions Values (?)");
   createCurrent.run(data.questionID);
 
