@@ -233,7 +233,7 @@ function findProblemTags(problemID, response) {
   var tagIDs = [];
   //tags = [];
   //There's probably a better way to do this...
-  db.all('SELECT * FROM Problem_Tags WHERE problemID = ' + problemID,
+  db.all('SELECT tagID FROM Problem_Tags WHERE problemID = ' + problemID,
   function(err, data) {
     //get tagIDs
     for (var i = 0; i < data.length; i++) {
