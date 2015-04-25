@@ -77,7 +77,7 @@
 
             // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
 
-            tableType: "Questions"
+            tableType: "Problems"
           };
         // talks to server
         // first argument: port,
@@ -91,17 +91,17 @@
             var item = recieved_data[2];
               var question_item_div = document.createElement("div");
               question_item_div.className = "ui segment"
-              $(question_item_div).attr('data-id', item.questionID);
+              $(question_item_div).attr('data-id', item.problemID);
             var item2 = recieved_data[0];              
               var question_item2_div = document.createElement("div");
               question_item2_div.className = "ui segment"
-              $(question_item2_div).attr('data-id', item2.questionID);
+              $(question_item2_div).attr('data-id', item2.problemID);
               
               // var list_item_inner_span = document.createElement("span");
               // $(list_item_inner_span).text(item.questionText);
 
-              $(question_item_div).text(item.questionText);
-              $(question_item2_div).text(item2.questionText);
+              $(question_item_div).text(item.problemContent);
+              $(question_item2_div).text(item2.problemContent);
               // $(question_item_div).append(list_item_inner_span);
               $("#caroline").append(question_item_div);
               $("#caroline").append(question_item2_div);
@@ -113,7 +113,7 @@
   // DATA THAT NEEDS TO BE SAVED
   var save_data = {
     type: 'save_question',
-    questionID: 4,
+    problemID: 4,
   }
   // COMMAND TO POST DATA TO URL. 
 
@@ -135,7 +135,7 @@
       <p>
         <div class="collapse navbar-collapse" ng-controller="HeaderController">
             <ul class="nav navbar-nav">
-                <a class="navbar-brand" href="#">WTE</a>
+                <a class="navbar-brand" href="#" onclick="show('Page1');">WTE</a>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li ng-class="{ active: isActive('/')}" ><a onclick="show('Page1');">Home</a></li>
@@ -181,9 +181,8 @@
             </div>
             <div class="four wide column">
               <div class="ui segment">
-              <h4>My Projects</h4>
-              <h4>Saved Projects</h4>
-              <h4>Saved Questions</h4>
+              <h4><a onclick="show('Page2');">My Projects</a></h4>
+              <h4><a onclick="show('Page2');">Saved Questions</a></h4>
               </div>   
             </div>
         </div>

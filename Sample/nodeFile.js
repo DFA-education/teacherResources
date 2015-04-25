@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 //Load modules
 var sqlite3         =       require('sqlite3').verbose();
 // var db              =       new sqlite3.Database('./Data/chicago.sqlite');
-var db              =       new sqlite3.Database('./Dragging/mydb.db');
+var db              =       new sqlite3.Database('WTE/wle.db');
 
 app.use(express.static(__dirname));
 
@@ -58,10 +58,10 @@ app.post('/', function(req, res){
 
 function addToDatabase(data,res){
 	
-  var createCurrent = db.prepare("INSERT INTO savedQuestions Values (?)");
-  createCurrent.run(data.questionID);
+  var createCurrent = db.prepare("INSERT INTO Saved_1 Values (?)");
+  createCurrent.run(data.problemID);
 
-  db.all("SELECT * From savedQuestions", function(err, dataInTable) {
+  db.all("SELECT * From Saved_1", function(err, dataInTable) {
       console.log("data in table " + dataInTable);
       res.send(dataInTable);
   });
