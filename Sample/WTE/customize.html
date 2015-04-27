@@ -13,32 +13,57 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.1.1/Sortable.min.js"></script>
     <!-- <link rel="stylesheet" type="text/css" href="customize.css" /> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.min.js"></script>
     </head>
 
     <body>
     <script>
-    function makeDraggableHandle(listName,groupName){
-        var el = document.getElementById(listName);
-        console.log(listName);
-        Sortable.create(el, {
-          group: groupName,
-          handle: '.glyphicon-move',
-          animation: 150,
-          // store: {
-          //   get: function(sortable){
-          //     var order = sessionStorage.getItem(sortable.options.group);
-          //     return order ? order.split('|') : [];
-          //   },
-          //   set: function(sortable){
-          //     var order = sortable.toArray();
-          //     sessionStorage.setItem(listName, order.join('|'));
-          //     // console.log(modifiedList);
-          //   }
-          // },
-        })
-        // console.log(sessionStorage.getItem(listName));
-        console.log(listName);
-      }
+      function makePDF(){
+         var doc = new jsPDF();
+         console.log(sessionStorage.getItem('listContainer2'));
+         var custWorksheet = sessionStorage.getItem('listContainer2').split('|');
+         // var item = document.getElementById('q1');
+         // console.log(item.innerText);
+         console.log(custWorksheet);
+         var offset = 0;
+         for (i = 0; i < custWorksheet.length; i++){
+           var text = document.getElementById(custWorksheet[i]).innerText;
+           var splitTitle = doc.splitTextToSize(text, 180);
+
+           doc.text(15, 10+10*(i+offset), splitTitle);
+           if (splitTitle.length > 1){
+             var offset = offset + splitTitle.length - 2 ;
+           }
+           // doc.text(20,, text);
+         }
+         // doc.text(20,20, "hello!!!");
+         doc.save('Test.pdf');
+       }
+
+       function makeDraggableHandle(listName,groupName){
+
+           var el = document.getElementById(listName);
+           console.log(listName);
+           Sortable.create(el, {
+             group: groupName,
+             handle: '.glyphicon-move',
+             animation: 150,
+             store: {
+               get: function(sortable){
+                 var order = sessionStorage.getItem(sortable.options.group);
+                 return order ? order.split('|') : [];
+               },
+               set: function(sortable){
+                 var order = sortable.toArray();
+                 sessionStorage.setItem(listName, order.join('|'));
+                 // console.log(modifiedList);
+                 console.log(sessionStorage.getItem(listName));
+               }
+             },
+           })
+           // console.log(sessionStorage.getItem(listName));
+           console.log(listName);
+         }
       </script>
 
     <div class="ui page grid" style = "padding-top : 10px">
@@ -53,19 +78,19 @@
         <div class="four wide column">
         <div class="ui segment">
             <div id = "listContainer1", class = "list-group", style = "min-height: 100px; background-color: #eee">
-            <div class="list-group-item" data-id = "1">
+            <div class="list-group-item" data-id = "q1" id="q1">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
               <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
               Two hundred tickets for the school play were sold. Tickets cost $2.00 for students and $3 for adults. The total amount collected was $490.00.  How many student tickets were sold?
             </div>
-            <div class="list-group-item" data-id = "2">
+            <div class="list-group-item" data-id = "q2" id="q2">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
               <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
               There are two phone plans. One plan has $28 one time fee, and 9 cents a min. The second is 13 cents a min. How many mins of ues to make the plans cost the same?
             </div>
-            <div class="list-group-item" data-id = "3">
+            <div class="list-group-item" data-id = "q3" id="q3">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
               <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
@@ -77,19 +102,19 @@
         <div class="eight wide column">
         <div class="ui segment">
             <div id = "listContainer2", class = "customizingSortable", style = "min-height: 100px; background-color: #eee">
-            <div class="list-group-item" data-id = "1">
+            <div class="list-group-item" data-id = "1" id="1">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
               <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
               Thing1
             </div>
-            <div class="list-group-item" data-id = "2">
+            <div class="list-group-item" data-id = "2" id="2">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
               <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
               Thing2
             </div>
-            <div class="list-group-item" data-id = "3">
+            <div class="list-group-item" data-id = "3" id="3">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
               <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
@@ -99,6 +124,7 @@
         </div>
         </div>
     </div>
+    <button id = 'savePDF' onclick = "makePDF()"> make pdf </button>
 
     <script>
       makeDraggableHandle("listContainer1", "handleList");
