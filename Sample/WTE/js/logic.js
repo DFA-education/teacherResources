@@ -113,3 +113,66 @@ function getQueryParams(key) {
 
   return params[key];
 }
+
+      function makeHeader(doc, origFontSize){
+        doc.setFontSize(20);
+        doc.text(70,30, "Algebra Worksheet 2");
+        doc.setFontSize(origFontSize)
+
+      }
+
+      function makePDF(){
+         var doc = new jsPDF();
+         var fontSize = 12;
+         doc.setFontSize(fontSize);
+         console.log(sessionStorage.getItem('listContainer2'));
+         console.log($('#listContainer2').children());
+         // var custWorksheet = sessionStorage.getItem('listContainer2').split('|');
+         var custWorksheet = $('#listContainer2').children();
+
+         // var item = document.getElementById('q1');
+         // console.log(item.innerText);
+         console.log(custWorksheet[1]);
+
+         var offset = 0
+         makeHeader(doc, fontSize);
+         for (i = 0; i < custWorksheet.length; i++){
+           var text = custWorksheet[i].innerText;
+           var splitTitle = doc.splitTextToSize(text, 180);
+
+           doc.text(15, 40+25*(i+offset), "Problem"+(i+1));
+
+           doc.text(15, 50+25*(i+offset), splitTitle);
+           if (splitTitle.length > 1){
+             var offset = offset + splitTitle.length - 1 ;
+           }
+           // doc.text(20,, text);
+         }
+         // doc.text(20,20, "hello!!!");
+         doc.save('Test.pdf');
+       }
+
+       function makeDraggableHandle(listName,groupName){
+
+           var el = document.getElementById(listName);
+           console.log(listName);
+           Sortable.create(el, {
+             group: groupName,
+             // handle: '.glyphicon-move',
+             animation: 150,
+             store: {
+               get: function(sortable){
+                 var order = sessionStorage.getItem(sortable.options.group);
+                 return order ? order.split('|') : [];
+               },
+               set: function(sortable){
+                 var order = sortable.toArray();
+                 sessionStorage.setItem(listName, order.join('|'));
+                 // console.log(modifiedList);
+                 console.log(sessionStorage.getItem(listName));
+               }
+             },
+           })
+           // console.log(sessionStorage.getItem(listName));
+           console.log(listName);
+         }

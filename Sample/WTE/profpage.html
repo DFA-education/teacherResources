@@ -12,6 +12,7 @@
     <script type='text/javascript' src='Semantic-UI-master/dist/semantic.min.js'></script>
     <script type="text/javascript" src="customize.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.1.1/Sortable.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.min.js"></script>
     <script type='text/javascript' src='js/logic.js'></script>
     <!--
       <link rel="stylesheet" type="text/css" href="customize.css" />
@@ -72,53 +73,140 @@
       </div>
     </div>
     <div id="Page2" class="superman" style="display:none">
-      <div class="ui page grid" style = "padding-top : 10px">
+          <div class="ui page grid" style = "padding-top : 10px">
         <div class="four wide column">
-          <div class="ui vertical menu">
-            <div class="header item">My Projects</div>
-            <a class="item" href="#">
-            New +
-            </a>
-          </div>
+            <div class="ui vertical menu">
+                <div class="header item">My Projects</div>
+                <a class="item" href="#">
+                New +
+                </a>
+            </div>
         </div>
         <div class="four wide column">
-          <div class="ui segment">
-            <div id = "listContainer1", class = "list-group", style = "min-height: 100px; background-color: #eee">
-            <div class="list-group-item" data-id = "1" contentEditable = "true" data-id = "1">
-              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+        <div class="ui segment">
+          <h3 class="ui dividing header">
+             <table style = "width: 100%">
+             <tr >
+             <td style = 'text-align: left; width 50%'>Saved Problems</td>
+          </tr>
+        </table>
+          </h3>
+            <div id = "listContainer1", class = "list-group", style = "min-height: 100px">
+            <div class="list-group-item" data-id = "q1" id="q1">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
               Two hundred tickets for the school play were sold. Tickets cost $2.00 for students and $3 for adults. The total amount collected was $490.00.  How many student tickets were sold?
             </div>
-            <div class="list-group-item" data-id = "2" contentEditable = "true" data-id = "1">
-              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+            <div class="list-group-item" data-id = "q2" id="q2">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
               There are two phone plans. One plan has $28 one time fee, and 9 cents a min. The second is 13 cents a min. How many mins of ues to make the plans cost the same?
             </div>
-            <div class="list-group-item" data-id = "3" contentEditable = "true" data-id = "1">
-              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+            <div class="list-group-item" data-id = "q3" id="q3">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
               Two cars started from the same point but traveled in opposite directions. the faster car traveled 15 kilometers faster than the slower car. after five hours the 2 cars were 575 kilometers apart. how many kilometers per hour did each car travel?
             </div>
-          </div>
+
+            <div class="list-group-item" data-id = "q4" id="q4">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              It takes a boat 3 hours to travel down a river from point A to point B, and 5 hours to travel up the river from B to A. How long would it take the same boat to go from A to B in still water? 
+            </div>
+
+            <div class="list-group-item" data-id = "q5" id="q5">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              In a shop, the cost of 4 shirts, 4 pairs of trousers and 2 hats is $560. The cost of 9 shirts, 9 pairs of trousers and 6 hats is $1,290. What is the total cost of 1 shirt, 1 pair of trousers and 1 hat? 
+            </div>
+
+            <div class="list-group-item" data-id = "q6" id="q6">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              A real estate agent received a 6% commission on the selling price of a house. If his commission was $8,880, what was the selling price of the house?  
+            </div>
+
+            <div class="list-group-item" data-id = "q7" id="q7">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              The area of a rectangular field is equal to 300 square meters. Its perimeter is equal to 70 meters. Find the length and width of this rectangle. 
+            </div>
+
+            <div class="list-group-item" data-id = "q8" id="q8">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              Four children have small toys. The first child has 1/10 of the toys, the second child has 12 more toys than the first, the third child has one more toy of what the first child has and the fourth child has double the third child. How many toys are there? 
+            </div>
+
+            </div>
         </div>
-      </div>
-      <div class="eight wide column">
+        </div>
+        <div class="eight wide column">
         <div class="ui segment">
-          <div id = "listContainer2", class = "customizingSortable", style = "min-height: 100px; background-color: #eee">
-          <div class="list-group-item" data-id = "1" contentEditable = "true" data-id = "1">
-            <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
-            Thing1
-          </div>
-          <div class="list-group-item" data-id = "2">
-            <span class="glyphicon glyphicon-move" aria-hidden="true" contentEditable = "true" data-id = "1"></span>
-            Thing2
-          </div>
-          <div class="list-group-item" data-id = "3">
-            <span class="glyphicon glyphicon-move" aria-hidden="true" contentEditable = "true" data-id = "1"></span>
-            Thing3
-          </div>
+          <h3 class="ui dividing header">
+             <table style = "width: 100%">
+             <tr >
+             <td style = 'text-align: left; width 50%'>Custom Worksheet</td>
+             
+             <td style = 'text-align: right; width 50%'>
+              <i class = 'ui button' id = 'savePDF' onclick = "makePDF()" style = 'padding-bottom: 5px; '> Download Worksheet </i>
+            </td>
+          </tr>
+        </table>
+          </h3>
+          
+            <div id = "listContainer2", class = "customizingSortable", style = "min-height: 100px; padding-top:5px">
+            <div class="list-group-item" data-id = "1" id="1">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              The price of a pair of (cheap) shoes has increased by 15%.  The original price of the shoes was $20.  What is the new price?
+ 
+            </div>
+            <div class="list-group-item" data-id = "2" id="2">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              A class average mark in an exam is 70. The average of students who scored below 60 is 50. The average of students who scored 60 or more is 75. If the total number of students in this class is 20, how many students scored below 60?
+            </div>
+            <div class="list-group-item" data-id = "3" id="3">
+              <!-- <span class="glyphicon glyphicon-move" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-edit" aria-hidden="true" style="float: right"></span>
+              <span class="glyphicon glyphicon-save" aria-hidden="true" style="float: right; display:none"></span>
+              An airplane flies against the wind from A to B in 8 hours. The same airplane returns from B to A, in the same direction as the wind, in 7 hours. Find the ratio of the speed of the airplane (in still air) to the speed of the wind. 
+            </div>
+            </div>
         </div>
-      </div>
+        </div>
     </div>
-    </div>
-    </div>
+
+    <script>
+      $('.list-group-item').css('cursor', 'move');
+      makeDraggableHandle("listContainer1", "handleList");
+      makeDraggableHandle("listContainer2", "handleList");
+
+      $(".glyphicon-edit").click(function(){
+        $(this).parent().attr("contentEditable", "true");
+        $(this).hide();
+        $(this).parent().children(".glyphicon-save").show();
+      });
+
+      $(".glyphicon-save").click(function(){
+        $(this).parent().attr("contentEditable", "false");
+        $(this).hide();
+        $(this).parent().children(".glyphicon-edit").show();
+      });
+    </script>
+
+     </div> 
     <div id="Page3" class="superman" style="display:none">
       Content of page 3
     </div>
