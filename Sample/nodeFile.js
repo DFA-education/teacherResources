@@ -1,50 +1,30 @@
-
-var express = require('express');
-var app = express();
-var path = require('path');
 var bodyParser = require('body-parser')
+var express = require('express');
+var path = require('path');
+
+var app = express();
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
 
-
+// XXX we should really change this to a proper sql library that prevents against injection attacks
 //Load modules
-var sqlite3         =       require('sqlite3').verbose();
-// var db              =       new sqlite3.Database('./Data/chicago.sqlite');
-var db              =       new sqlite3.Database('WTE/wle.db');
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('WTE/wle.db');
 
 app.use(express.static(__dirname));
 
-// function findRouteNumber(routeNumber, response){
-// 	// logs the routeNumber in the console
-// 	// to see the console, look at your terminal window where you ran nodeFile.js
-// 	console.log(routeNumber);
-// 	// selects the relevant variable "on_street" from the table in the database, called "Bus",
-// 	// where the route is equal to the routeNumber
-
-// 	//!!!!!!! THIS: 'select on_street from Bus where routes = 44" IS A SQL QUERY
-
-// 	db.all('select on_street from Bus where routes = "'+routeNumber+'"', function(err, streets){
-// 		// send the first street name back to the browser
-// 		response.send(streets[0]);
-// 	})
-// }
-
-function getTableValue(tableType, response){
-	// logs the routeNumber in the console
-	// to see the console, look at your terminal window where you ran nodeFile.js
-	console.log('tabletype ',tableType);
-	// selects the relevant variable "on_street" from the table in the database, called "Bus", 
-	// where the route is equal to the routeNumber
-
-	//!!!!!!! THIS: 'select on_street from Bus where routes = 44" IS A SQL QUERY
-	
-	db.all('select * from ' + tableType, function(err, list){
-		// send the first street name back to the browser
+function sqlSelect(query, response) {
+	var wheres = [];
+	var filters = JSON.parse(query.filters);
+	for (column in filters) {
+		wheres.push(column+"='"+filters[column]+"'");
+	}
+	var query = 'select * from ' + query.table + ' where ' + wheres.join(' and ');
+	db.all(query, function(err, list) {
 		response.send(list);
-		
-	})
+	});
 }
 
 //buttons to add to database
@@ -68,21 +48,14 @@ function addToDatabase(data,res){
 }
 
 // handle requests from client
-app.get('/',function(request,response){
+app.get('/',function(request, response){
 	response.header('Access-Control-Allow-Origin', "*");
 
-	// !!!!! HERE IS THE NODE/EXPRESS MAGIC
-	if (request.query.type == "getTableValue"){
-		var output = getTableValue(request.query.tableType, response);
-	}
-
-	if (request.query.type == "routeStreetRequest"){
-		var output = findRouteNumber(request.query.routeNumber, response);
+	if (request.query.type == "select") {
+		sqlSelect(request.query, response);
 	}
 
 });
-
-
 
 app.listen(1337);
 console.log('Listening on port 1337');

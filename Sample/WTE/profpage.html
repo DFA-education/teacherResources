@@ -1,234 +1,88 @@
-<html>
-    <head>
+<html ng-app="wte">
+  <head>
     <title>WTE</title>
-<link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
     <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.min.css'/>
     <link rel='stylesheet' type='text/css' href='Semantic-UI-master/dist/semantic.css'/>
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
     <script type='text/javascript' src='js/bootstrap.js'></script>
+    <script type='text/javascript' src='js/angular.min.js'></script>
     <script type='text/javascript' src='js/controllers.js'></script>
     <script type='text/javascript' src='Semantic-UI-master/dist/semantic.js'></script>
     <script type='text/javascript' src='Semantic-UI-master/dist/semantic.min.js'></script>
     <script type="text/javascript" src="customize.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.1.1/Sortable.min.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="customize.css" /> -->
-
-        <style type='text/css'>
-        </style>
-        <script>
-            // show the given page, hide the rest
-            function show(elementID) {
-                // try to find the requested page and alert if it's not found
-                var ele = document.getElementById(elementID);
-                if (!ele) {
-                    alert("no such element");
-                    return; 
-                }
-                console.log(ele);
-                // get all pages, loop through them and hide them
-                var pages = document.getElementsByClassName('superman');
-                for(var i = 0; i < pages.length; i++) {
-                    pages[i].style.display = 'none';
-                }
-
-                // then show the requested page
-                ele.style.display = 'block';
-//                var children = $($(ele).find('.page')).css('display','block');
-            }
-            $(document).ready(function() {
-                $(".item").hover(
-                    function(){
-                        //what to do on hover
-                        $($(this).children()).css('display', 'block')
-
-                    },
-                    function(){
-                        $($(this).children()).css('display', 'none')
-
-                    });
-                getTableValue()
-
-
-            });
-
-              function getProblem(problemID){
-                console.log("getProblem");
-                // creates json object to send to server
-                var problem = {
-                    type: "problemRequest",
-                    problem: problemID
-                    // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
-                  };
-                // talks to server
-                // first argument: port,
-                // second: data to send over,
-                // third: function that specifies what to do with the data that is recieved
-                $.get('http://127.0.0.1:1337/', problem, function(recieved_data){
-                    // prints the data recieved on the console.
-                    // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
-                    console.log(recieved_data[2].problem);
-                    // puts the relevant data into the on street textbox
-                    //document.getElementById('onStreet').value = recieved_data.on_street;
-                  });
-                  // reset textbox value
-                  //routeInput.value = "";
-              }
-        function getTableValue(){
-          console.log("in getTableValue")
-        // creates json object to send to server
-        var tableRequestData = {
-            type: "getTableValue",
-
-            // !!!!!!! ANYTHING WITH A '$' IS JQUERY. THIS IS JQUERY
-
-            tableType: "Problems"
-          };
-        // talks to server
-        // first argument: port,
-        // second: data to send over,
-        // third: function that specifies what to do with the data that is recieved
-        $.get('http://127.0.0.1:1337/', tableRequestData, function(recieved_data){
-            // prints the data recieved on the console.
-            // in your browser, click "View" --> "Developer" --> "javaScript Console" to see the console
-            console.log(recieved_data);
-            // puts the relevant data into the on street textbox
-            var item = recieved_data[2];
-              var question_item_div = document.createElement("div");
-              question_item_div.className = "ui segment"
-              $(question_item_div).attr('data-id', item.problemID);
-            var item2 = recieved_data[0];              
-              var question_item2_div = document.createElement("div");
-              question_item2_div.className = "ui segment"
-              $(question_item2_div).attr('data-id', item2.problemID);
-              
-              // var list_item_inner_span = document.createElement("span");
-              // $(list_item_inner_span).text(item.questionText);
-
-              $(question_item_div).text(item.problemContent);
-              $(question_item2_div).text(item2.problemContent);
-              // $(question_item_div).append(list_item_inner_span);
-              $("#caroline").append(question_item_div);
-              $("#caroline").append(question_item2_div);
-            
-          });
-      }
-      
-      function saveTableValue(){
-  // DATA THAT NEEDS TO BE SAVED
-  var save_data = {
-    type: 'save_question',
-    problemID: 4,
-  }
-  // COMMAND TO POST DATA TO URL. 
-
-  $.ajax({
-    type: "POST",
-    url: "http://127.0.0.1:1337/",
-    data: save_data,
-    // FUNCTION THAT EXECUTES WHEN THE POST IS SUCCESSFUL
-    success: function success(response){
-      console.log(response);
-    }
-    })  
-}
-        </script>
-
-
-    </head>
-    <body>
-      <p>
-        <div class="collapse navbar-collapse" ng-controller="HeaderController">
-            <ul class="nav navbar-nav">
-                <a class="navbar-brand" href="#" onclick="show('Page1');">WTE</a>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{ active: isActive('/')}" ><a onclick="show('Page1');">Home</a></li>
-                <li ng-class="{ active: isActive('/')}"><a onclick="show('Page2');">Profile</a></li>
-                <li ng-class="{ active: isActive('/')}"><a onclick="show('Page3');">Workspace</a></li>
-            </ul>
-        </div>
-        <hr>
-        </p>
-
+    <script type='text/javascript' src='js/logic.js'></script>
+    <!--
+      <link rel="stylesheet" type="text/css" href="customize.css" />
+      -->
+  </head>
+  <body ng-controller="master">
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <a class="navbar-brand" href="#" onclick="show('Page1');">WTE</a>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a onclick="show('Page1');">Home</a></li>
+        <li><a onclick="show('Page2');">Profile</a></li>
+        <li><a onclick="show('Page3');">Workspace</a></li>
+      </ul>
+    </div>
+    <hr>
     <div id="Page1" class="superman" style="">
-       <div class="ui page grid">
-            <div class="four wide column">
-              <div class="ui vertical menu">
-          <div class="header item">Subject Matter</div>
-          <a class="item" href="#" >
+      <div class="ui page grid">
+        <div class="four wide column">
+          <div class="ui vertical menu">
+            <div class="header item">Subject Matter</div>
+            <a class="item" href="?topic=algebra" >
             Algebra
-          </a>
-          <a class="item" href="?subject=Geometry">
+            </a>
+            <a class="item" href="?topic=geometry">
             Geometry
-          </a>
-          <a class="item" href="#">
+            </a>
+            <a class="item" href="?topic=statistics">
             Statistics
-          </a>
-          <div class="item">
-            Pre-Calculus
-            <div class = "menu" style = "display: none;">
-            <a class = "item">Lines</a>
-            <a class = "item">Graphs</a>
-            <a class = "item">Functions</a>
-
-          </div>
-          </div>
-
-          <a class="item" href="#">
+            </a>
+            <div class="item">
+              Pre-Calculus
+              <div class = "menu" style = "display: none;">
+                <a class = "item">Lines</a>
+                <a class = "item">Graphs</a>
+                <a class = "item">Functions</a>
+              </div>
+            </div>
+            <a class="item" href="#">
             Calculus
-          </a>
-              </div>        
-            </div>
-            <div class="eight wide column">
-              <div class="ui segment" id ="caroline">
-              <button onclick = "saveTableValue()">saved</button>
-              </div>    
-            </div>
-            <div class="four wide column">
-              <div class="ui segment">
-              <h4><a onclick="show('Page2');">My Projects</a></h4>
-              <h4><a onclick="show('Page2');">Saved Questions</a></h4>
-              </div>   
-            </div>
+            </a>
+          </div>
         </div>
+        <div class="eight wide column">
+          <div class="ui segment" ng-repeat="problem in problems">
+            {{problem.problemContent}}
+            <br>
+            <div class="ui button" onclick = "saveTableValue()">save</div>
+          </div>
+        </div>
+        <div class="four wide column">
+          <div class="ui segment">
+            <h4><a onclick="show('Page2');">My Projects</a></h4>
+            <h4><a onclick="show('Page2');">Saved Questions</a></h4>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="Page2" class="superman" style="display:none">
-    <script>
-    function makeDraggableHandle(listName,groupName){
-        var el = document.getElementById(listName);
-        console.log(listName);
-        Sortable.create(el, {
-          group: groupName,
-          handle: '.glyphicon-move',
-          animation: 150,
-          // store: {
-          //   get: function(sortable){
-          //     var order = sessionStorage.getItem(sortable.options.group);
-          //     return order ? order.split('|') : [];
-          //   },
-          //   set: function(sortable){
-          //     var order = sortable.toArray();
-          //     sessionStorage.setItem(listName, order.join('|'));
-          //     // console.log(modifiedList);
-          //   }
-          // },
-        })
-        // console.log(sessionStorage.getItem(listName));
-        console.log(listName);
-      }
-      </script>
-
-    <div class="ui page grid" style = "padding-top : 10px">
+      <div class="ui page grid" style = "padding-top : 10px">
         <div class="four wide column">
-            <div class="ui vertical menu">
-                <div class="header item">My Projects</div>
-                <a class="item" href="#">
-                New +
-                </a>
-            </div>
+          <div class="ui vertical menu">
+            <div class="header item">My Projects</div>
+            <a class="item" href="#">
+            New +
+            </a>
+          </div>
         </div>
         <div class="four wide column">
-        <div class="ui segment">
+          <div class="ui segment">
             <div id = "listContainer1", class = "list-group", style = "min-height: 100px; background-color: #eee">
             <div class="list-group-item" data-id = "1" contentEditable = "true" data-id = "1">
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
@@ -242,37 +96,31 @@
               <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
               Two cars started from the same point but traveled in opposite directions. the faster car traveled 15 kilometers faster than the slower car. after five hours the 2 cars were 575 kilometers apart. how many kilometers per hour did each car travel?
             </div>
-            </div>
+          </div>
         </div>
-        </div>
-        <div class="eight wide column">
+      </div>
+      <div class="eight wide column">
         <div class="ui segment">
-            <div id = "listContainer2", class = "customizingSortable", style = "min-height: 100px; background-color: #eee">
-            <div class="list-group-item" data-id = "1" contentEditable = "true" data-id = "1">
-              <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
-              Thing1
-            </div>
-            <div class="list-group-item" data-id = "2">
-              <span class="glyphicon glyphicon-move" aria-hidden="true" contentEditable = "true" data-id = "1"></span>
-              Thing2
-            </div>
-            <div class="list-group-item" data-id = "3">
-              <span class="glyphicon glyphicon-move" aria-hidden="true" contentEditable = "true" data-id = "1"></span>
-              Thing3
-            </div>
-            </div>
+          <div id = "listContainer2", class = "customizingSortable", style = "min-height: 100px; background-color: #eee">
+          <div class="list-group-item" data-id = "1" contentEditable = "true" data-id = "1">
+            <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+            Thing1
+          </div>
+          <div class="list-group-item" data-id = "2">
+            <span class="glyphicon glyphicon-move" aria-hidden="true" contentEditable = "true" data-id = "1"></span>
+            Thing2
+          </div>
+          <div class="list-group-item" data-id = "3">
+            <span class="glyphicon glyphicon-move" aria-hidden="true" contentEditable = "true" data-id = "1"></span>
+            Thing3
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-
-    <script>
-      makeDraggableHandle("listContainer1", "handleList");
-      makeDraggableHandle("listContainer2", "handleList");
-    </script>
+    </div>
     </div>
     <div id="Page3" class="superman" style="display:none">
-        Content of page 3
+      Content of page 3
     </div>
-
-    </body>
+  </body>
 </html>
